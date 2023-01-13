@@ -10,6 +10,7 @@ user = [
         "nom": "Fenoaina",
         "prenom": "Tony",
         "mail": "tfenoaina@gmail.com",
+        "role":"client",
         "mot_de_passe": "1234"
 
     },
@@ -17,8 +18,16 @@ user = [
         "nom": "Hanintsoa",
         "prenom": "Elodie",
         "mail": "andriamahanintsoelo@gmail.com",
+        "role":"atelier",
         "mot_de_passe": "1234"
 
+    },
+    {
+        "nom": "Rindratiana",
+        "prenom": "Holiniaina",
+        "mail": "ratsimandavana@gmail.com",
+        "role":"financiere",
+        "mot_de_passe": "1234"
     }
 ];
 
