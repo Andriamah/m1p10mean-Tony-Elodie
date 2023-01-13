@@ -85,3 +85,5 @@ function start() {
     .catch(console.error)
 
 }
+exports.start = start;
+
