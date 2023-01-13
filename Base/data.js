@@ -10,7 +10,7 @@ user = [
         "nom": "Fenoaina",
         "prenom": "Tony",
         "mail": "tfenoaina@gmail.com",
-        "role":"client",
+        "role": "client",
         "mot_de_passe": "1234"
 
     },
@@ -18,7 +18,7 @@ user = [
         "nom": "Hanintsoa",
         "prenom": "Elodie",
         "mail": "andriamahanintsoelo@gmail.com",
-        "role":"atelier",
+        "role": "atelier",
         "mot_de_passe": "1234"
 
     },
@@ -26,7 +26,7 @@ user = [
         "nom": "Rindratiana",
         "prenom": "Holiniaina",
         "mail": "ratsimandavana@gmail.com",
-        "role":"financiere",
+        "role": "financiere",
         "mot_de_passe": "1234"
     }
 ];
@@ -88,9 +88,10 @@ repair = [
                 "etat": "0"
             }
         ],
-        "date_paiement":"",
-        "date_debut":new Date().toISOString().substring(0, 10),
-        "date_fin":"",
+        "etat": "0",
+        "date_paiement": "",
+        "date_debut": new Date().toISOString().substring(0, 10),
+        "date_fin": "",
         "total": 12000
     },
     {
@@ -112,9 +113,10 @@ repair = [
                 "etat": "0"
             }
         ],
-        "date_paiement":"",
-        "date_debut":new Date().toISOString().substring(0, 10),
-        "date_fin":"",
+        "etat": "0",
+        "date_paiement": "",
+        "date_debut": new Date().toISOString().substring(0, 10),
+        "date_fin": "",
         "total": 20000
     },
     {
@@ -131,9 +133,10 @@ repair = [
                 "etat": "0"
             }
         ],
-        "date_paiement":"",
-        "date_debut":new Date().toISOString().substring(0, 10),
-        "date_fin":"",
+        "etat": "0",
+        "date_paiement": "",
+        "date_debut": new Date().toISOString().substring(0, 10),
+        "date_fin": "",
         "total": 655000
     }
 ];
@@ -143,12 +146,12 @@ db.utilisateur.find().pretty();
 db.voiture.find().pretty();
 db.reparation.find().pretty();
 
-db.voiture.find({"statut":"0"}).pretty();
-db.reparation.find({"_id":ObjectId("63becbf457672d5b733e9219")}).pretty();
+db.voiture.find({ "statut": "0" }).pretty();
+db.reparation.find({ "_id": ObjectId("63becbf457672d5b733e9219") }).pretty();
 
 // ty no mety--------------------------
 db.reparation.aggregate([
-    {$group : {_id:"$date_debut",valeur:{$sum:"$total"}}}
+    { $group: { _id: "$date_debut", valeur: { $sum: "$total" } } }
 ]).pretty()
 // ty no mety---------------------------
 
