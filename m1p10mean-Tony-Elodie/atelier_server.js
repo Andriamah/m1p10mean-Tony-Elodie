@@ -16,28 +16,33 @@ require('dotenv')
 
 // Replace process.env.DB_URL with your actual connection string
 const connectionString = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb"
+ // ========================
+    // Middlewares
+    // ========================
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(express.static('public'))
 
 MongoClient.connect(connectionString, { useUnifiedTopology: true })
   .then(client => {
     console.log('Connected to Database')
     const db = client.db('garage')
-      const utilisateurCollection = db.collection('voiture')
-
+      const voitureCollection = db.collection('voiture')
     // ========================
-    // Middlewares
+    // Reception
     // ========================
-
-  //  app.set('view engine', 'ejs')
-    app.use(bodyParser.urlencoded({ extended: true }))
-    app.use(bodyParser.json())
-    app.use(express.static('public'))
-
-    // ========================
-    // Routes
-    // ========================
-
-   
-    // ========================
+    app.get('/reception-voiture', (req, res) => {
+      voitureCollection.find({ "statut": "0" }).toArray()
+        .then(result => {
+          res.json(result);
+          console.error(result)
+        })
+        .catch(error => console.error(error))
+    })
+  })
+  .catch(console.error) 
+}
+// ========================
     // Listen
     // ========================
     const isProduction = process.env.NODE_ENV === 'production'
@@ -45,9 +50,4 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
     app.listen(port, function () {
       console.log(`listening on ${port}`)
     })
-  })
-  .catch(console.error)
-  
-}
-
 exports.start = start;
