@@ -8,11 +8,11 @@ const app = express()
 // ========================
 // Updates environment variables
 // @see https://zellwk.com/blog/environment-variables/
-require('./dotenv')
+require('dotenv')
 
 // Replace process.env.DB_URL with your actual connection string
 
-function start() {
+function start(app = express()) {
 
     const connectionString = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb"
 
@@ -34,35 +34,43 @@ function start() {
             // Routes
             // ========================
 
-            // Create reparation--------------------------------------------
-            app.post('/reparation', (req, res) => {
-                reparationCollection.insertOne(req.body)
-                    .then(result => {
-                        // res.redirect('/')
-                        console.error(result)
-                    })
-                    .catch(error => console.error(error))
-            })
-            //  Create reparation--------------------------------------------
-
-            // List reparation en cours--------------------------------------------
-            app.get('/reparations', (req, res) => {
-                reparationCollection.find({ "etat": "0" }, { "_id": req.params._id }).toArray()
+            // Fiche reparation en cours---------------------Mieritreritra aho oe mety ts ialiana-----------------------
+            app.get('/reparation-afaire/nom=:nom', (req, res) => {
+                reparationCollection.find({ "etat": "0" ,"voiture.nom" : req.params.nom}).toArray()
                     .then(reparataion => {
+                        console.log("boby")
                         return res.json(reparataion)
                     })
                     .catch(/* ... */)
             })
             //  List reparation en cours--------------------------------------------
 
+
+            // Fiche reparation selectionne--------------------------------------------
+            app.get('/fiche-reparations/_id=:_id', (req, res) => {
+                reparationCollection.find({ "_id": req.params._id }).toArray()
+                    .then(reparataion => {
+                        return res.json(reparataion)
+                    })
+                    .catch(/* ... */)
+            })
+            //  Fiche reparation selectionne--------------------------------------------
+
+            // Valider Paiement--------------------------------------------
+            app.put('/reparationsnnn', (req, res) => {
+                reparationCollection.update({ "_id": req.params._id }, { $set: { "statu": 1 ,"date_paiement":"new Date().toISOString().substring(0, 10)"} 
+            })
+                    .then(reparataion => {
+                        return res.json(reparataion)
+                    })
+                    .catch(/* ... */)
+            })
+            //  Valider Paiement--------------------------------------------
+
             // ========================
             // Listen
             // ========================
-            const isProduction = process.env.NODE_ENV === 'production'
-            const port = isProduction ? 7500 : 3000
-            app.listen(port, function () {
-                console.log(`listening on ${port}`)
-            })
+            
         })
         .catch(console.error)
 

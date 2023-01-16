@@ -148,6 +148,7 @@ db.reparation.find().pretty();
 
 db.voiture.find({ "statut": "0" }).pretty();
 db.reparation.find({ "_id": ObjectId("63becbf457672d5b733e9219") }).pretty();
+db.reparation.find({ "voiture.matricule": "1215TAB"}).pretty();
 
 // ty no mety--------------------------
 db.reparation.aggregate([

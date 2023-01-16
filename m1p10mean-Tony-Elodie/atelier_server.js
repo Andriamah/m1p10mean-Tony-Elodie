@@ -3,18 +3,12 @@ const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 const app = express()
 var router = express.Router()
-
-function start() {
-  module.exports = router;
-
-// // ========================
-// // Link to Database
-// // ========================
-// // Updates environment variables
-// // @see https://zellwk.com/blog/environment-variables/
 require('dotenv')
 
-// Replace process.env.DB_URL with your actual connection string
+function start(app = express()) {
+  // module.exports = router;
+
+
 const connectionString = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb"
 
 MongoClient.connect(connectionString, { useUnifiedTopology: true })
@@ -37,14 +31,6 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
     // ========================
 
    
-    // ========================
-    // Listen
-    // ========================
-    const isProduction = process.env.NODE_ENV === 'production'
-    const port = isProduction ? 7500 : 3000
-    app.listen(port, function () {
-      console.log(`listening on ${port}`)
-    })
   })
   .catch(console.error)
   
