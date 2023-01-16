@@ -2,61 +2,91 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 const app = express()
-var router = express.Router()
 
-function start() {
-    module.exports = router;
+// ========================
+// Link to Database
+// ========================
+// Updates environment variables
+// @see https://zellwk.com/blog/environment-variables/
+require('dotenv')
 
-    // // ========================
-    // // Link to Database
-    // // ========================
-    // // Updates environment variables
-    // // @see https://zellwk.com/blog/environment-variables/
-    require('dotenv')
+// Replace process.env.DB_URL with your actual connection string
 
-    // Replace process.env.DB_URL with your actual connection string
+function start(app = express()) {
+
     const connectionString = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb"
-    // ========================
-    // Middlewares
-    // ========================
-    app.use(bodyParser.urlencoded({ extended: true }))
-    app.use(bodyParser.json())
-    app.use(express.static('public'))
 
     MongoClient.connect(connectionString, { useUnifiedTopology: true })
         .then(client => {
             console.log('Connected to Database')
             const db = client.db('garage')
-            const voitureCollection = db.collection('reparation')
-            // ========================
-            // Reception
-            // ========================
-            app.post('/new-reparation', (req, res) => {
-                voitureCollection.insertOne(req.body)
-                    .then(result => {
-                        // res.redirect('/')
-                        console.error(result)
-                    })
-                    .catch(error => console.error(error))
-            })
+            const reparationCollection = db.collection('reparation')
 
-            app.get('/reception-voiture', (req, res) => {
-                voitureCollection.find({ "statut": "0" }).toArray()
-                    .then(result => {
-                        res.json(result);
-                        console.error(result)
+            // ========================
+            // Middlewares
+            // ========================
+            app.set('view engine', 'ejs')
+            app.use(bodyParser.urlencoded({ extended: true }))
+            app.use(bodyParser.json())
+            app.use(express.static('public'))
+
+            // ========================
+            // Routes
+            // ========================
+
+            // Fiche reparation en cours---------------------Mieritreritra aho oe mety ts ialiana-----------------------
+            app.get('/reparation-afaire/nom=:nom', (req, res) => {
+                reparationCollection.find({ "etat": "0" ,"voiture.nom" : req.params.nom}).toArray()
+                    .then(reparataion => {
+                        console.log("boby")
+                        return res.json(reparataion)
                     })
-                    .catch(error => console.error(error))
+                    .catch(/* ... */)
             })
+            //  List reparation en cours--------------------------------------------
+
+            // Historique reparation du client--------------------------------------------
+            app.get('/historique-reparation/nom=:nom', (req, res) => {
+                reparationCollection.find({"voiture.nom" : req.params.nom}).toArray()
+                    .then(reparataion => {
+                        console.log("boby")
+                        return res.json(reparataion)
+                    })
+                    .catch(/* ... */)
+            })
+            // Historique reparation du client--------------------------------------------
+
+
+            // Fiche reparation selectionne--------------------------------------------
+            app.get('/fiche-reparations/_id=:_id', (req, res) => {
+                reparationCollection.find({ "_id": req.params._id }).toArray()
+                    .then(reparataion => {
+                        return res.json(reparataion)
+                    })
+                    .catch(/* ... */)
+            })
+            //  Fiche reparation selectionne--------------------------------------------
+
+            // Valider Paiement--------------------------------------------
+            app.put('/valider-paiement/_id=:_id', (req, res) => {
+            //     reparationCollection.updateOne({ "_id": req.params._id }, { $set: { "etat": 111 } },{upsert: true}
+            // })
+            reparationCollection.findOneAndUpdate({ "voiture.nom": req.params._id },{ $set: { "etat": 1,"date_paiement" : new Date().toISOString().substring(0, 10) } }, {upsert: true})
+                    .then(reparataion => {
+                        console.log("valisation "+req.params._id)
+                        return res.json(reparataion)
+                    })
+                    .catch(/* ... */)
+            })
+            //  Valider Paiement--------------------------------------------
+
+            // ========================
+            // Listen
+            // ========================
+            
         })
         .catch(console.error)
+
 }
-// ========================
-// Listen
-// ========================
-const isProduction = process.env.NODE_ENV === 'production'
-const port = isProduction ? 7500 : 3000
-app.listen(port, function () {
-    console.log(`listening on ${port}`)
-})
 exports.start = start;
+
