@@ -8,12 +8,11 @@ const app = express()
 // ========================
 // Updates environment variables
 // @see https://zellwk.com/blog/environment-variables/
-require('./dotenv')
+require('dotenv')
 
 // Replace process.env.DB_URL with your actual connection string
 
-function start() {
-
+function start(app = express() ) {
   const connectionString = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb"
 
   MongoClient.connect(connectionString, { useUnifiedTopology: true })
@@ -76,12 +75,10 @@ function start() {
       // ========================
       // Listen
       // ========================
-      const isProduction = process.env.NODE_ENV === 'production'
-      const port = isProduction ? 7500 : 3000
-      app.listen(port, function () {
-        console.log(`listening on ${port}`)
-      })
+    
     })
     .catch(console.error)
-
+    
 }
+exports.start = start;
+

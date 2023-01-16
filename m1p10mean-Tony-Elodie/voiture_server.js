@@ -43,17 +43,26 @@ function start() {
           })
           .catch(error => console.error(error))
       })
+
+      app.get('/reception-voitures', (req, res) => {
+        voitureCollection.find({ "statut": "0" }).toArray()
+          .then(result => {
+            res.json(result);
+            console.error(result)
+          })
+          .catch(error => console.error(error))
+      })
       // Save voiture--------------------------------------------
 
       // ========================
       // Listen
       // ========================
-      const isProduction = process.env.NODE_ENV === 'production'
-      const port = isProduction ? 7500 : 3000
-      app.listen(port, function () {
-        console.log(`listening on ${port}`)
-      })
+      // const isProduction = process.env.NODE_ENV === 'production'
+      // const port = isProduction ? 7500 : 3000
+      // app.listen(port, function () {
+      //   console.log(`listening on ${port}`)
+      // })
     })
     .catch(console.error)
-
 }
+exports.start = start;
