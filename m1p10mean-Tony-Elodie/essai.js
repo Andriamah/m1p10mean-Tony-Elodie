@@ -7,10 +7,7 @@ require('dotenv')
 function start(app = express(), db) {
 
     const voitureCollection = db.collection('voiture')
-    app.set('view engine', 'ejs')
-    app.use(bodyParser.urlencoded({ extended: true }))
-    app.use(bodyParser.json())
-    app.use(express.static('public'))
+    
     // Router
     app.get('/connexion', (req, res) => {
         return res.json({ "voiture": "coucou" })
