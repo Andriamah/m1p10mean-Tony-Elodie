@@ -35,10 +35,10 @@ function start(app = express()) {
             // ========================
 
             // Fiche reparation en cours---------------------Mieritreritra aho oe mety ts ialiana-----------------------
-            app.get('/reparation-afaire/nom=:nom', (req, res) => {
-                reparationCollection.find({ "etat": "0" ,"voiture.nom" : req.params.nom}).toArray()
+            app.get('/reparation-afaire?nom=:nom', (req, res) => {
+                reparationCollection.find({ "etat": "0", "voiture.nom": req.params.nom }).toArray()
                     .then(reparataion => {
-                        console.log("boby")
+                        console.log("boby " + req.params.nom)
                         return res.json(reparataion)
                     })
                     .catch(/* ... */)
@@ -47,7 +47,7 @@ function start(app = express()) {
 
             // Historique reparation du client--------------------------------------------
             app.get('/historique-reparation/nom=:nom', (req, res) => {
-                reparationCollection.find({"voiture.nom" : req.params.nom}).toArray()
+                reparationCollection.find({ "voiture.nom": req.params.nom }).toArray()
                     .then(reparataion => {
                         console.log("boby")
                         return res.json(reparataion)
@@ -69,21 +69,34 @@ function start(app = express()) {
 
             // Valider Paiement--------------------------------------------
             app.put('/valider-paiement/_id=:_id', (req, res) => {
-            //     reparationCollection.updateOne({ "_id": req.params._id }, { $set: { "etat": 111 } },{upsert: true}
-            // })
-            reparationCollection.findOneAndUpdate({ "voiture.nom": req.params._id },{ $set: { "etat": 1,"date_paiement" : new Date().toISOString().substring(0, 10) } }, {upsert: true})
+                //     reparationCollection.updateOne({ "_id": req.params._id }, { $set: { "etat": 111 } },{upsert: true}
+                // })
+                reparationCollection.findOneAndUpdate({ "voiture.nom": req.params._id }, { $set: { "etat": 1, "date_paiement": new Date().toISOString().substring(0, 10) } }, { upsert: true })
                     .then(reparataion => {
-                        console.log("valisation "+req.params._id)
+                        console.log("valisation " + req.params._id)
                         return res.json(reparataion)
                     })
                     .catch(/* ... */)
             })
             //  Valider Paiement--------------------------------------------
 
+            // Chiffre d'afaire jour--------------------------------------------
+            app.get('/chiifre_affaire', (req, res) => {
+                //     reparationCollection.updateOne({ "_id": req.params._id }, { $set: { "etat": 111 } },{upsert: true}
+                // })
+                reparationCollection.aggregate([
+                    { $group: { _id: "$date_debut", valeur: { $sum: "$total" } } }
+                ]).then(reparataion => {
+                    return res.json(reparataion)
+                })
+                    .catch(/* ... */)
+            })
+            //  Chiffre d'afaire jour--------------------------------------------
+
             // ========================
             // Listen
             // ========================
-            
+
         })
         .catch(console.error)
 
