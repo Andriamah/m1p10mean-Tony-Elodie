@@ -9,30 +9,30 @@ function start(app = express()) {
   // module.exports = router;
 
 
-const connectionString = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb"
+// const connectionString = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb"
 
-MongoClient.connect(connectionString, { useUnifiedTopology: true })
-  .then(client => {
-    console.log('Connected to Database')
-    const db = client.db('garage')
-      const utilisateurCollection = db.collection('voiture')
+// MongoClient.connect(connectionString, { useUnifiedTopology: true })
+//   .then(client => {
+//     console.log('Connected to Database')
+//     const db = client.db('garage')
+//       const utilisateurCollection = db.collection('voiture')
 
-    // ========================
-    // Middlewares
-    // ========================
+//     // ========================
+//     // Middlewares
+//     // ========================
 
-  //  app.set('view engine', 'ejs')
-    app.use(bodyParser.urlencoded({ extended: true }))
-    app.use(bodyParser.json())
-    app.use(express.static('public'))
+//   //  app.set('view engine', 'ejs')
+//     app.use(bodyParser.urlencoded({ extended: true }))
+//     app.use(bodyParser.json())
+//     app.use(express.static('public'))
 
-    // ========================
-    // Routes
-    // ========================
+//     // ========================
+//     // Routes
+//     // ========================
 
    
-  })
-  .catch(console.error)
+//   })
+//   .catch(console.error)
   
 }
 
