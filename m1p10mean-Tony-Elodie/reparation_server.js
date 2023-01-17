@@ -71,27 +71,42 @@ function start(app = express()) {
             app.put('/valider-paiement/_id=:_id', (req, res) => {
                 //     reparationCollection.updateOne({ "_id": req.params._id }, { $set: { "etat": 111 } },{upsert: true}
                 // })
-                reparationCollection.findOneAndUpdate({ "voiture.nom": req.params._id }, { $set: { "etat": 1, "date_paiement": new Date().toISOString().substring(0, 10) } }, { upsert: true })
+                reparationCollection.findOneAndUpdate({ "voiture.nom": req.params._id },
+                    { $set: { "etat": 1, "date_paiement": new Date() } }, { upsert: true })
                     .then(reparataion => {
                         console.log("valisation " + req.params._id)
                         return res.json(reparataion)
                     })
                     .catch(/* ... */)
+                db.close()
             })
             //  Valider Paiement--------------------------------------------
 
             // Chiffre d'afaire jour--------------------------------------------
             app.get('/chiifre_affaire', (req, res) => {
-                //     reparationCollection.updateOne({ "_id": req.params._id }, { $set: { "etat": 111 } },{upsert: true}
-                // })
                 reparationCollection.aggregate([
                     { $group: { _id: "$date_debut", valeur: { $sum: "$total" } } }
-                ]).then(reparataion => {
-                    return res.json(reparataion)
-                })
-                    .catch(/* ... */)
+                ])
+                    // reparationCollection.findOne({ "$date_debut": "2023-01-16T20:29:11.005Z" })
+                    .then(reparataion => {
+                        return res.json(reparataion)
+                    })
+                    .catch(console.log("elo"))
+                db.close()
+
             })
             //  Chiffre d'afaire jour--------------------------------------------
+
+            app.get('/chiffre_affaire', (req, res) => {
+                reparationCollection.aggregate([
+                    { $match: { etat: 0 } }
+                ]).then(function (docs) {
+                    console.log(docs)
+                })
+                    .catch(console.log("elo"))
+                db.close()
+
+            })
 
             // ========================
             // Listen
