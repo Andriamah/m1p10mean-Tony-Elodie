@@ -116,22 +116,20 @@ function start(app = express(), db) {
     //  Chiffre d'afaire Mois--------------------------------------------
 
     app.get('/chiffre_affaire', (req, res) => {
-        // reparationCollection.aggregate([
-        //     { $match: { etat: 0 } }
-        // ]).then(function (docs) {
-        //     console.log(docs)
-        // })
-        //     .catch(console.log("elo"))
-
-
-
-        const pipeline = [
-                { $match: { etat: 0 } }
-            ];
-        const aggCursor = coll.aggregate(pipeline);
-        for await (const doc of aggCursor) {
-            console.log(doc);
-        }
+        const valiny = reparationCollection.aggregate([
+            {
+                $lookup:
+                {
+                    _id: { month: { $month: "$date_debut" }, year: { $year: "$date_debut" } },
+                    totalAmount: { $sum: "$total" },
+                    count: { $sum: 1 }
+                }
+            }
+        ]).then(reparataion => {
+            return res.json(reparataion)
+        })
+        .catch(console.log("elo"))
+        return res.json(valiny)
 
     })
 
@@ -139,11 +137,21 @@ function start(app = express(), db) {
 
     // --------------------------
     app.get('/benefice', (req, res) => {
-        reparationCollection.find({ "_id": req.params._id }).toArray()
-            .then(reparataion => {
-                return res.json(reparataion)
-            })
-            .catch(/* ... */)
+        var data = [{
+            id: 1, elo: 2
+        }, {
+            id: 21, elo: 2
+        }];
+
+        console.log("isany " + data.length);
+        var total = 0
+        for (const val of data) {
+            total = total + val.id
+        }
+        console.log("Valiny teooo " + total)
+        return res.json(data.length)
+        req.body.total = total
+
     })
 
 
