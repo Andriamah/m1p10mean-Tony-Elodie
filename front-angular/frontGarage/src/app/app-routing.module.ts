@@ -5,7 +5,9 @@ import { UtilisateurListComponent } from './utilisateur-list/utilisateur-list.co
 
 
 const appRoutes: Routes = [
-  { path: 'acceuil', component: UtilisateurListComponent },
+  // { path: 'acceuil', component: UtilisateurListComponent },
+  { path: '', component: UtilisateurListComponent },
+
 ];
 
 @NgModule({
