@@ -57,7 +57,7 @@ export class AppComponent {
     }
     this.utilisateurService.login(_utilisateur_).subscribe({
       next: data => {
-        console.log("ito ooo "+data.role)
+        console.log("ito ooo " + data.role)
         if (data.role === "client") {
           console.log("tkn manao root izy zao")
           this.router.navigate(['/acceuil']);
