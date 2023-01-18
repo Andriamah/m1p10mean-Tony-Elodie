@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, tap } from 'rxjs';
-import { Utilisateur } from './utilisateur';
+import { Utilisateur } from '../Modele/utilisateur';
  
 @Injectable({
  providedIn: 'root'
@@ -30,12 +30,12 @@ export class UtilisateurService {
  
  createUtilisateur(utilisateur: Utilisateur): Observable<Utilisateur> {
   console.log(utilisateur)
-   return this.httpClient.post<Utilisateur>("http://localhost:3000/inscription", utilisateur);
+   return this.httpClient.post<Utilisateur>(`${this.url}/inscription`, utilisateur);
  }
 
- essai(utilisateur: Utilisateur): Observable<Utilisateur> {
+ login(utilisateur: Utilisateur): Observable<Utilisateur> {
   console.log(utilisateur)
-   return this.httpClient.post(`${this.url}/`, utilisateur);
+   return this.httpClient.post(`${this.url}/login`, utilisateur);
  }
  
 //  updateEmployee(id: string, employee: Employee): Observable<string> {
