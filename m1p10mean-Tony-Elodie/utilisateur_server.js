@@ -25,19 +25,6 @@ function start(app = express(), db) {
   app.get('/', (req, res) => {
     console.log('ato za')
 
-    const hash = encrypt('Hello World!')
-
-    console.log(hash)
-
-    // {
-    //     iv: '237f306841bd23a418878792252ff6c8',
-    //     content: 'e2da5c6073dd978991d8c7cd'
-    // }
-
-    const text = decrypt(hash)
-
-    console.log(text)
-
   })
 
   // Login--------------------------------------------
@@ -73,6 +60,7 @@ function start(app = express(), db) {
     utilisateurCollection.insertOne(req.body)
       .then(result => {
         // res.redirect('/')
+        console.log("anao inscription")
         return res.json('Inscription  :  ' + '    ' + result)
       })
       .catch(error => console.error(error))

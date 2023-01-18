@@ -12,24 +12,30 @@ export class UtilisateurService {
  
  constructor(private httpClient: HttpClient) { }
  
- private refreshUtilisateurs() {
-   this.httpClient.get<Utilisateur[]>(`${this.url}/employees`)
-     .subscribe(utilisateurs => {
-       this.utilisateur$.next(utilisateurs);
-     });
- }
+//  private refreshUtilisateurs() {
+//    this.httpClient.get<Utilisateur[]>(`${this.url}/employees`)
+//      .subscribe(utilisateurs => {
+//        this.utilisateur$.next(utilisateurs);
+//      });
+//  }
  
- getEmployees(): Subject<Utilisateur[]> {
-   this.refreshUtilisateurs();
-   return this.utilisateur$;
- }
+//  getEmployees(): Subject<Utilisateur[]> {
+//    this.refreshUtilisateurs();
+//    return this.utilisateur$;
+//  }
  
 //  getEmployee(id: string): Observable<Employee> {
 //    return this.httpClient.get<Employee>(`${this.url}/employees/${id}`);
 //  }
  
- createUtilisateur(utilisateur: Utilisateur): Observable<string> {
-   return this.httpClient.post(`${this.url}/inscription`, utilisateur, { responseType: 'text' });
+ createUtilisateur(utilisateur: Utilisateur): Observable<Utilisateur> {
+  console.log(utilisateur)
+   return this.httpClient.post<Utilisateur>("http://localhost:3000/inscription", utilisateur);
+ }
+
+ essai(utilisateur: Utilisateur): Observable<Utilisateur> {
+  console.log(utilisateur)
+   return this.httpClient.post(`${this.url}/`, utilisateur);
  }
  
 //  updateEmployee(id: string, employee: Employee): Observable<string> {

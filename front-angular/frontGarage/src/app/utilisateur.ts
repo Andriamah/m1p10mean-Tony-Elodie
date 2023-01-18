@@ -3,5 +3,5 @@ export interface Utilisateur {
     prenom?:String,
     mail?:String,
     role?:String,
-    mot_de_passe?:String,
+    mot_de_passe?:String
 }

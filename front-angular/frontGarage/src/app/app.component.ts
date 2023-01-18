@@ -1,35 +1,44 @@
 import { Component } from '@angular/core';
-
+import { Utilisateur } from './utilisateur';
+import { UtilisateurService } from './utilisateur.service'
 @Component({
   selector: 'app-root',
-  template: `
- 
-<div class="main">  	
-<input type="checkbox" id="chk" aria-hidden="true">
-
-  <div class="signup">
-    <form [formGroup]="inscription" (ngSubmit)="signUp()">
-      <label for="chk" aria-hidden="true">Sign up</label>
-      <input type="text" name="txt" placeholder="User name" required="">
-      <input type="email" name="email" placeholder="Email" required="">
-      <input type="password" name="pswd" placeholder="Password" required="">
-      <button>Sign up</button>
-    </form>
-  </div>
-
-  <div class="login">
-    <form>
-      <label for="chk" aria-hidden="true">Login</label>
-      <input type="email" name="email" placeholder="Email" required="">
-      <input type="password" name="pswd" placeholder="Password" required="">
-      <button>Login</button>
-    </form>
-  </div>
-</div>
-    <router-outlet></router-outlet>
-  `,
+  templateUrl: './app.component.html',
   styles: []
 })
 export class AppComponent {
+  // ==constructeur
+  constructor(private utilisateurService: UtilisateurService) { }
+
+
+  // ===DECLARATION
   title = 'frontGarage';
+  nom = ''
+  prenom = ''
+  mail = ''
+  mdp = ''
+
+  // ===Function
+  inscription(){
+    console.log(this.nom)
+
+    let _utilisateur_ = {
+      nom : this.nom,
+      prenom : this.prenom,
+      mail : this.mail,
+      role : "client",
+      mot_de_passe : this.mdp
+    }
+    this.utilisateurService.createUtilisateur(_utilisateur_).subscribe({
+      next : data =>{
+        console.log(data)
+      },
+      error : e =>{
+        console.log(e.error.error)
+      }
+      
+    })
+  
+    alert(this.nom)
+  }
 }
