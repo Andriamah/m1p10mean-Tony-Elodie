@@ -9,15 +9,7 @@ require('dotenv')
 
 function start(app = express(), db) {
   const utilisateurCollection = db.collection('utilisateur')
-
-  // ========================
-  // Middlewares
-  // ========================
-  // app.set('view engine', 'ejs')
-  // app.use(bodyParser.urlencoded({ extended: true }))
-  // app.use(bodyParser.json())
-  // app.use(express.static('public'))
-
+  
   // ========================
   // Routes
   // ========================
@@ -31,7 +23,7 @@ function start(app = express(), db) {
   app.post('/login', (req, res) => {
     utilisateurCollection.findOne(
       {
-        nom: req.body.nom,
+        mail: req.body.mail,
         mot_de_passe: req.body.mot_de_passe
       }
     )
@@ -39,12 +31,18 @@ function start(app = express(), db) {
         result => {
           if (result != null) {
             if (result.role == "client") {
+              console.log("Vlient")
+
               return res.json('CLIENT :  ' + '    ' + result.nom)
 
             } if (result.role == "atelier") {
+              console.log("anao atelier")
+
               return res.json('ATELIER  :  ' + '    ' + result.nom)
 
             } else {
+              console.log("anao finance")
+
               return res.json('FINANCIERE  :  ' + '    ' + result.nom)
             }
           } else {
@@ -60,7 +58,6 @@ function start(app = express(), db) {
     utilisateurCollection.insertOne(req.body)
       .then(result => {
         // res.redirect('/')
-        console.log("anao inscription")
         return res.json('Inscription  :  ' + '    ' + result)
       })
       .catch(error => console.error(error))

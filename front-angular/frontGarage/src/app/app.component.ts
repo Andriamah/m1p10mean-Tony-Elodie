@@ -18,27 +18,48 @@ export class AppComponent {
   mail = ''
   mdp = ''
 
+  email = ''
+  pswd = ''
+
   // ===Function
-  inscription(){
+  inscription() {
     console.log(this.nom)
 
     let _utilisateur_ = {
-      nom : this.nom,
-      prenom : this.prenom,
-      mail : this.mail,
-      role : "client",
-      mot_de_passe : this.mdp
+      nom: this.nom,
+      prenom: this.prenom,
+      mail: this.mail,
+      role: "client",
+      mot_de_passe: this.mdp
     }
     this.utilisateurService.createUtilisateur(_utilisateur_).subscribe({
-      next : data =>{
+      next: data => {
         console.log(data)
       },
-      error : e =>{
+      error: e => {
         console.log(e.error.error)
       }
-      
+
     })
-  
-    alert(this.nom)
+  }
+
+  login() {
+    console.log(this.email)
+    let _utilisateur_ = {
+      nom: this.nom,
+      prenom: this.prenom,
+      mail: this.email,
+      role: "client",
+      mot_de_passe: this.pswd
+    }
+    this.utilisateurService.login(_utilisateur_).subscribe({
+      next: data => {
+        console.log(data)
+      },
+      error: e => {
+        console.log(e.error.error)
+      }
+
+    })
   }
 }
