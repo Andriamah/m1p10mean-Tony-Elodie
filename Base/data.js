@@ -90,7 +90,7 @@ repair = [
         ],
         "etat": "0",
         "date_paiement": "",
-        "date_debut": new Date().toISOString().substring(0, 10),
+        "date_debut": new Date (),
         "date_fin": "",
         "total": 12000
     },
@@ -115,7 +115,7 @@ repair = [
         ],
         "etat": "0",
         "date_paiement": "",
-        "date_debut": new Date().toISOString().substring(0, 10),
+        "date_debut": new Date (),
         "date_fin": "",
         "total": 20000
     },
@@ -135,7 +135,7 @@ repair = [
         ],
         "etat": "0",
         "date_paiement": "",
-        "date_debut": new Date().toISOString().substring(0, 10),
+        "date_debut": new Date (),
         "date_fin": "",
         "total": 655000
     }
@@ -155,13 +155,32 @@ db.voiture.find({ "statut": "0", "utilisateur.nom": "Nancy" }).pretty()
 db.reparation.update({ "_id": ObjectId("63c51f093a8c6451eefa84d7") }, { $set: { "etat": 0, "date_paiement": "" } })
 db.voiture.deleteOne({ "_id": ObjectId("63c2ef15f377a6461c92fa7c") })
 
-db.reparation.update({ "etat": "0" }, { $set: { "date_fin": new Date().toISOString().substring(0, 10) } })
+db.reparation.update({ "etat": "0" }, { $set: { "date_fin": new Date () } })
 
 // ty no mety CF par jour--------------------------
 db.reparation.aggregate([
     { $group: { _id: "$date_debut", valeur: { $sum: "$total" } } }
 ]).pretty()
 // ty no mety CF par jour---------------------------
+
+
+// ty no mety CF par Mois---------------------------
+db.reparation.aggregate(
+    [
+      {
+        $group:
+          {
+            _id: { month: { $month: "$date_debut"}, year: { $year: "$date_debut" } },
+            totalAmount: { $sum: "$total" },
+            count: { $sum: 1 }
+          }
+      }
+    ]
+ )
+
+// ty no mety CF par Mois---------------------------
+
+
 
 db.reparation.aggregate([
     { $group: { _id: "$date_debut", valeur: { $sum: "$total" } } }
@@ -185,31 +204,19 @@ db.reparation.aggregate([{
 db.reparation.aggregate(
     [
         {
-            $group:
+            $project:
             {
-                _id: null,
+                _id: 0,
                 averageTime:
                 {
                     $avg:
                     {
-                        $dateDiff:
-                        {
-                            startDate: "$date_debut",
-                            endDate: "$date_fin",
-                            unit: "day"
-                        }
+                        $subtract:
+                        
+                            [new date(),
+                            $date_debut]
+                        
                     }
-                }
-            }
-        },
-        {
-            $project:
-            {
-                _id: 0,
-                numDays:
-                {
-                    $trunc:
-                        ["$averageTime", 1]
                 }
             }
         }
@@ -223,12 +230,20 @@ db.reparation.aggregate(
             $project: {
                 _id: 0,
                 date_debut: 1,
-                date_fin: 1,
+                date_fin: new Date(),
                 result: {
-                    $subtract: [$date_fin, $date_debut]
+                    $subtract: [new Date(), "$date_debut"]
+                }
+            }
+        },
+        {
+            $project: {
+                result: {
+                    $avg: {"$result"}
                 }
             }
         }
+
     ]
 ).pretty()
 
@@ -240,30 +255,19 @@ db.reparation.aggregate([
         $project: {
             _id: 0,
             daysince: {
-                $divide: [{ $subtract: [new Date().toISOString().substring(0, 10), $date_debut] }, 1000 * 60 * 60 * 24]
+                $divide: [{ $subtract: [new Date(), $date_debut] },60000 ]
             }
         }
     }
 ]);
-
-db.reparation.aggregate([{
-    $project : {
-        _id : 0,
-
-    }
-}])
-
-
-
-
-
+// Vrai Moyenne-------------------------------------------------
 db.reparation.aggregate([
     {
         $project: {
-            $difference: {
+            difference: {
                 $divide: [
-                    { $subtract: ["$date_debut", "$date_fin"] },
-                    60 * 1000 * 60
+                    { $subtract: [new Date(), "$date_debut"] },
+                    60000
                 ]
             }
         }
@@ -271,11 +275,29 @@ db.reparation.aggregate([
     {
         $group: {
             _id: null,
-            totalDifference: { $sum: $difference }
+            totalDifference: { $avg: "$difference" }
         }
-    },
-    { $match: { totalDifference: { $gte: 20 } } }
+    }
 ])
+// Vrai Moyenne-------------------------------------------------
+
+
+// Soustraction--------------------------------
+db.reparation.aggregate([
+    {
+        $project: {
+            hello : { $subtract: [new Date(), "$date_debut"] },
+            difference: {
+                $divide: [
+                    { $subtract: [new Date(), "$date_debut"] },
+                    60000
+                ]
+            }
+        }
+    }
+])
+// Soustraction-------------------------------- 
+
 
 
 db.reparation.aggregate([{$addFields: { timeDiff: {$subract: [new Date().toISOString().substring(0, 10), "$date_debut" ]} }}])
@@ -287,7 +309,7 @@ db.reparation.find({ "etat": "0", "voiture.prenom": "Tony" }).pretty();
 
 
 
-db.reparation.aggregate( [ { $project: { _id: null, dateDifference: { $subtract: [ "$date_fin", "$date_debut" ] } } } ] )
+db.reparation.aggregate( [ { $project: { _id: null, $dateDifference: $avg:{ $subtract: [ new Date(), "$date_debut" ] } } }] )
 
 
 db.reparation.aggregate([
@@ -296,6 +318,37 @@ db.reparation.aggregate([
 
 
 
+// Moyenne à notre----------------------------------------------------
+db.reparation.aggregate([
+    { $group:{
+      _id: null,
+      avg_time: {
+        $avg: {
+          $divide : [
+            $subtract: [
+                { $ifNull: [ new Date(), 0 ] },
+                { $ifNull: [ "$date_debut", 0 ] }
+              ],6000
+          ]
+            
+        }
+      }
+    }}
+  ])
+// Moyenne à notre----------------------------------------------------
+db.planning.aggregate(
+    [
+      { $project: { name: 1, workdays: { $divide: [ "$hours", 8 ] } } }
+    ]
+ )
 
+// Recherche---------------------------------
+db.reparation.find({
+    
+        $gte: ISODate("2023-01-29T00:00:00.000Z"),
+        $lt: ISODate("2023-02-01T00:00:00.000Z")
+    
+})
+// Rercheche-------------------------------------------
 
 

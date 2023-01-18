@@ -15,27 +15,17 @@ var router = express.Router()
 require('dotenv')
 
 
-function start(app = express()) {
+function start(app = express(),db) {
 
-  // module.exports = router;
-
-
-
-  const connectionString = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb"
-
-  MongoClient.connect(connectionString, { useUnifiedTopology: true })
-    .then(client => {
-      console.log('Connected to Database voiture')
-      const db = client.db('garage')
-      const voitureCollection = db.collection('voiture')
+      const voitureCollection = db.collection('utilisateur')
 
       // ========================
       // Middlewares
       // ========================
       // app.set('view engine', 'ejs')
-      app.use(bodyParser.urlencoded({ extended: true }))
-      app.use(bodyParser.json())
-      app.use(express.static('public'))
+      // app.use(bodyParser.urlencoded({ extended: true }))
+      // app.use(bodyParser.json())
+      // app.use(express.static('public'))
 
       // ========================
       // Routes
@@ -87,8 +77,7 @@ function start(app = express()) {
           .catch(error => console.error(error))
       })
 
-    })
-    .catch(console.error)
+  
   // Recuperer Voiture --------------------------------------------
 
 
