@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { Utilisateur } from './utilisateur';
-import { UtilisateurService } from './utilisateur.service'
+import { Utilisateur } from './Modele/utilisateur';
+import { UtilisateurService } from './Service/utilisateur.service'
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,7 +9,9 @@ import { UtilisateurService } from './utilisateur.service'
 })
 export class AppComponent {
   // ==constructeur
-  constructor(private utilisateurService: UtilisateurService) { }
+  constructor(private utilisateurService: UtilisateurService,
+    private router: Router
+  ) { }
 
 
   // ===DECLARATION
@@ -54,7 +57,13 @@ export class AppComponent {
     }
     this.utilisateurService.login(_utilisateur_).subscribe({
       next: data => {
-        console.log(data)
+        console.log("ito ooo "+data.role)
+        if (data.role === "client") {
+          console.log("tkn manao root izy zao")
+          this.router.navigate(['/acceuil']);
+        } else {
+          console.log("Tsy client")
+        }
       },
       error: e => {
         console.log(e.error.error)

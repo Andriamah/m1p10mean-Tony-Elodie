@@ -30,23 +30,24 @@ function start(app = express(), db) {
       .then(
         result => {
           if (result != null) {
-            if (result.role == "client") {
-              console.log("Vlient")
+            // if (result.role == "client") {
+            //   console.log("Vlient")
 
-              return res.json('CLIENT :  ' + '    ' + result.nom)
+            //   return res.json('CLIENT')
 
-            } if (result.role == "atelier") {
-              console.log("anao atelier")
+            // } if (result.role == "atelier") {
+            //   console.log("anao atelier")
 
-              return res.json('ATELIER  :  ' + '    ' + result.nom)
+            //   return res.json('ATELIER ')
 
-            } else {
-              console.log("anao finance")
+            // } else {
+            //   console.log("anao finance")
 
-              return res.json('FINANCIERE  :  ' + '    ' + result.nom)
-            }
+            //   return res.json('FINANCIERE ')
+            // }
+            return res.json(result)
           } else {
-            return res.json('DISO' + req.params.nom)
+            return res.json('DISO')
           }
         })
       .catch(error => console.error(error))
