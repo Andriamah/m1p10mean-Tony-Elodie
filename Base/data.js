@@ -92,6 +92,7 @@ repair = [
         "date_paiement": "",
         "date_debut": new Date().toISOString().substring(0, 10),
         "date_fin": "",
+        "avancement": "0",
         "total": 12000
     },
     {
@@ -117,6 +118,7 @@ repair = [
         "date_paiement": "",
         "date_debut": new Date().toISOString().substring(0, 10),
         "date_fin": "",
+        "avancement": "0",
         "total": 20000
     },
     {
@@ -137,6 +139,7 @@ repair = [
         "date_paiement": "",
         "date_debut": new Date().toISOString().substring(0, 10),
         "date_fin": "",
+        "avancement": "0",
         "total": 655000
     }
 ];
@@ -247,8 +250,8 @@ db.reparation.aggregate([
 ]);
 
 db.reparation.aggregate([{
-    $project : {
-        _id : 0,
+    $project: {
+        _id: 0,
 
     }
 }])
@@ -278,8 +281,8 @@ db.reparation.aggregate([
 ])
 
 
-db.reparation.aggregate([{$addFields: { timeDiff: {$subract: [new Date().toISOString().substring(0, 10), "$date_debut" ]} }}])
-db.reparation.aggregate([{$addFields: { timeDiff: {$subract:[ 5, 8 ]} }}])
+db.reparation.aggregate([{ $addFields: { timeDiff: { $subract: [new Date().toISOString().substring(0, 10), "$date_debut"] } } }])
+db.reparation.aggregate([{ $addFields: { timeDiff: { $subract: [5, 8] } } }])
 
 
 
@@ -287,7 +290,7 @@ db.reparation.find({ "etat": "0", "voiture.prenom": "Tony" }).pretty();
 
 
 
-db.reparation.aggregate( [ { $project: { _id: null, dateDifference: { $subtract: [ "$date_fin", "$date_debut" ] } } } ] )
+db.reparation.aggregate([{ $project: { _id: null, dateDifference: { $subtract: ["$date_fin", "$date_debut"] } } }])
 
 
 db.reparation.aggregate([
