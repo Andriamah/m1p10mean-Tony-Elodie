@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 const app = express()
+const nodemailer = require("nodemailer")
 
 // ========================
 // Link to Database
@@ -128,7 +129,7 @@ function start(app = express(), db) {
         ]).then(reparataion => {
             return res.json(reparataion)
         })
-        .catch(console.log("elo"))
+            .catch(console.log("elo"))
         return res.json(valiny)
 
     })
@@ -151,6 +152,37 @@ function start(app = express(), db) {
         console.log("Valiny teooo " + total)
         return res.json(data.length)
         req.body.total = total
+
+    })
+
+    app.get('/send_mail', async (req, res) => {
+        let transporter = nodemailer.createTransport({
+            // host: "smtp.ethereal.email",
+            // port: 587,
+            // secure: false, // true for 465, false for other ports
+            service :'gmail',
+            auth: {
+                user: 'wendydarling1215@gmail.com', // generated ethereal user
+                pass: 'onbyvskabveufadg', // generated ethereal password
+            },
+        });
+        // send mail with defined transport object
+        const msg ={
+            from: 'wendydarling1215@gmail.com', // sender address
+            to: 'andriamahanintsoelo@gmail.com', // list of receivers
+            subject: "Hello ✔", // Subject line
+            text: "Hello world? Mail via node", // plain text body
+        };
+        const info = await transporter.sendMail(msg ,function(error,ifon){
+            if(error)
+            {
+                console.log("TSY METY")
+                console.log(error)
+            }else{
+                console.log("METY")
+                console.log(" email send "+info.response)
+            }
+        });
 
     })
 
