@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ReceptionComponent } from './reception/reception.component';
 
 import { UtilisateurListComponent } from './utilisateur-list/utilisateur-list.component';
 
@@ -7,6 +8,7 @@ import { UtilisateurListComponent } from './utilisateur-list/utilisateur-list.co
 const appRoutes: Routes = [
   // { path: 'acceuil', component: UtilisateurListComponent },
   { path: '', component: UtilisateurListComponent },
+  { path: 'reception', component: ReceptionComponent },
 
 ];
 
