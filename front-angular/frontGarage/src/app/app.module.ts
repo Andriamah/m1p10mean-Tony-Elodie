@@ -8,18 +8,22 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UtilisateurListComponent } from './utilisateur-list/utilisateur-list.component';
 import { ReceptionComponent } from './reception/reception.component';
+import { ReparartionComponent } from './reparartion/reparartion.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
     AppComponent,
     UtilisateurListComponent,
-    ReceptionComponent
+    ReceptionComponent,
+    ReparartionComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]
