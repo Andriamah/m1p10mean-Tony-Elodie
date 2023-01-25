@@ -6,7 +6,8 @@ import { UtilisateurService } from '../Service/utilisateur.service';
 
 @Component({
   selector: 'app-utilisateur-list',
-  templateUrl: './utilisateur-list.component.html'
+  templateUrl: './utilisateur-list.component.html',
+  // styles:['login_style.css']
 })
 export class UtilisateurListComponent  {
   // ==constructeur
@@ -30,6 +31,7 @@ export class UtilisateurListComponent  {
     console.log(this.nom)
 
     let _utilisateur_ = {
+      _id:"null",
       nom: this.nom,
       prenom: this.prenom,
       mail: this.mail,
@@ -50,6 +52,7 @@ export class UtilisateurListComponent  {
   login() {
     console.log(this.email)
     let _utilisateur_ = {
+      _id:"null",
       nom: this.nom,
       prenom: this.prenom,
       mail: this.email,
@@ -61,6 +64,9 @@ export class UtilisateurListComponent  {
         console.log("ito ooo " + data.role)
         if (data.role === "client") {
           console.log("tkn manao root izy zao")
+          // var value = data._id
+          var value=''+data._id!
+          localStorage.setItem('token', value)
           this.router.navigate(['/acceuil']);
         } else {
           console.log("Tsy client")

@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 var router = express.Router()
-const { encrypt, decrypt } = require('./crypto')
+const  ObjectID = require('mongodb').ObjectId;
 
 
 require('dotenv')
@@ -14,8 +14,23 @@ function start(app = express(), db) {
   // Routes
   // ========================
 
-  app.get('/', (req, res) => {
-    console.log('ato za')
+  app.get('/utilisateur/_id=:_id', (req, res) => {
+    console.log(req.params._id)
+    // collection.findOne({ _id: ObjectId("5d71522dc452f78e335d2d8b") });
+    utilisateurCollection.findOne(
+      {
+        _id : ObjectID(req.params._id)
+      }
+    )
+      .then(
+        result => {
+          if (result != null) {
+            return res.json(result)
+          } else {
+            return res.json('DISO')
+          }
+        })
+      .catch(error => console.error(error))
 
   })
 
@@ -30,21 +45,6 @@ function start(app = express(), db) {
       .then(
         result => {
           if (result != null) {
-            // if (result.role == "client") {
-            //   console.log("Vlient")
-
-            //   return res.json('CLIENT')
-
-            // } if (result.role == "atelier") {
-            //   console.log("anao atelier")
-
-            //   return res.json('ATELIER ')
-
-            // } else {
-            //   console.log("anao finance")
-
-            //   return res.json('FINANCIERE ')
-            // }
             return res.json(result)
           } else {
             return res.json('DISO')

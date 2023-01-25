@@ -17,7 +17,7 @@ require('dotenv')
 
 function start(app = express(),db) {
 
-      const voitureCollection = db.collection('utilisateur')
+      const voitureCollection = db.collection('voiture')
 
       // ========================
       // Middlewares
@@ -39,6 +39,7 @@ function start(app = express(),db) {
         voitureCollection.insertOne(req.body)
           .then(result => {
             // res.redirect('/')
+            console.log("ito ny body "+req.body.matricule)
             return res.json(result)
           })
           .catch(error => console.error(error))

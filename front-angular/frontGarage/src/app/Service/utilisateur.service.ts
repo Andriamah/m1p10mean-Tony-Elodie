@@ -24,9 +24,9 @@ export class UtilisateurService {
 //    return this.utilisateur$;
 //  }
  
-//  getEmployee(id: string): Observable<Employee> {
-//    return this.httpClient.get<Employee>(`${this.url}/employees/${id}`);
-//  }
+ getUtilisateur(id: String): Observable<Utilisateur> {
+   return this.httpClient.get<Utilisateur>(`${this.url}/utilisateur/_id=${id}`);
+ }
  
  createUtilisateur(utilisateur: Utilisateur): Observable<Utilisateur> {
   console.log(utilisateur)

@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { UtilisateurListComponent } from './utilisateur-list/utilisateur-list.component';
+import {DepotVoitureComponent} from './client/depot-voiture.component'
 
 
 const appRoutes: Routes = [
-  // { path: 'acceuil', component: UtilisateurListComponent },
+  { path: 'acceuil', component: DepotVoitureComponent },
   { path: '', component: UtilisateurListComponent },
 
 ];
