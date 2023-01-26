@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,20 +10,23 @@ import { UtilisateurListComponent } from './utilisateur-list/utilisateur-list.co
 import { ReceptionComponent } from './reception/reception.component';
 import { ReparartionComponent } from './reparartion/reparartion.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { DiagnosticComponent } from './diagnostic/diagnostic.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UtilisateurListComponent,
     ReceptionComponent,
-    ReparartionComponent
+    ReparartionComponent,
+    DiagnosticComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    DragDropModule
+    DragDropModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

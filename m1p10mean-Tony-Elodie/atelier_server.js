@@ -7,14 +7,24 @@ function start(app = express(), db) {
   // module.exports = router;
   const voiturecollection = db.collection('voiture')
   const reparationcollection = db.collection('reparation')
+  const detail = db.collection('detail')
   // ========================
   // Middlewares
   // ========================
 
   app.get('/reception_voiture', (req, res) => {
-    voiturecollection.find({ statut: "0" }).toArray()
+    voiturecollection.find({ statut: "0"}).toArray()
       .then(quotes => {
         res.json(quotes);
+      })
+      .catch(/* ... */)
+  })
+
+  app.get('/reparation_voiture/matricule=:matricule', (req, res) => {
+    reparationcollection.find({"voiture.matricule": req.params.matricule,"etat":"0"}).toArray()
+      .then(quotes => {
+        res.json(quotes[0].detail);
+        console.log(quotes[0].detail)
       })
       .catch(/* ... */)
   })
@@ -35,17 +45,12 @@ function start(app = express(), db) {
   })
 
   app.post('/finir_detail_reparation', (req, res) => {
-     
     reparationcollection.findOneAndUpdate(
-      { "detail.object" :req.body.object,"voiture.matricule":req.body.matricule,"etat":"0","detail.prix" :req.body.prix},
+      {"voiture.matricule":req.body.matricule,"etat":"0"},
       {
         $set: {
           "detail": [
-            {
-                "prix": req.body.prix,
-                "object": req.body.object,
-                "etat": "1"
-            }
+           req.body.detail
         ],
         },
       
@@ -54,11 +59,6 @@ function start(app = express(), db) {
       .then(result => res.json('Success'))
       .catch(error => console.error(error))
   })
-
-  
-
-
-
 
 }
 exports.start = start;

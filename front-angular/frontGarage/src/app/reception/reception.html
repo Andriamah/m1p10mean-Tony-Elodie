@@ -5,36 +5,10 @@
         <div class="table-responsive">
             <table class="table table-top-campaign">
                 <tbody>
-                    <tr>
-                        <td>1306TAB
-                        </td>
-                        <td><button class="btn btn-primary" [routerLink]="['']">Reparer</button></td>
+                    <tr *ngFor="let voiture of voitures$ | async">
+                        <td>{{voiture.matricule}}</td>
+                        <td><button class="btn btn-primary" [routerLink]="['reparation',voiture.matricule]">Reparer</button></td>
                     </tr>
-                    <tr>
-                        <td>1215TAC</td>
-                        <td><button class="btn btn-primary" [routerLink]="['']">Reparer</button></td>
-                    </tr>
-                    <tr>
-                        <td>3. Turkey</td>
-                        <td><button class="btn btn-primary" [routerLink]="['']">Reparer</button></td>
-                    </tr>
-                    <tr>
-                        <td>4. Germany</td>
-                        <td><button class="btn btn-primary" [routerLink]="['']">Reparer</button></td>
-                    </tr>
-                    <tr>
-                        <td>5. France</td>
-                        <td><button class="btn btn-primary" [routerLink]="['']">Reparer</button></td>
-                    </tr>
-                    <tr>
-                        <td>3. Turkey</td>
-                        <td><button class="btn btn-primary" [routerLink]="['']">Reparer</button></td>
-                    </tr>
-                    <tr>
-                        <td>4. Germany</td>
-                        <td><button class="btn btn-primary" [routerLink]="['']">Reparer</button></td>
-                    </tr>
-                  
                     
                 </tbody>
             </table>
