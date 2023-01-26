@@ -1,12 +1,9 @@
+import {Utilisateur} from './utilisateur'
 export interface Voiture {
     matricule?: String,
     type?: String,
     marque?: String,
-    utilisateur?: {
-        nom?: String,
-        prenom?: String,
-        mail?: String
-    },
+    utilisateur?: Utilisateur,
     description?: String,
     statut?: String
 }

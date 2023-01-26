@@ -13,6 +13,14 @@ import {FooterComponent} from './Footer/footer.component';
 import {HeaderComponent} from './Header/header.component'
 import {DepotVoitureComponent} from './client/depot-voiture.component'
 import {NavBarComponent} from './Header/nav-bar.component'
+import {ReparationListComponent} from './client/reparation-list.component'
+import {DetailReparationComponent} from './client/detail-reparation.component'
+import {HistoriqueComponent} from './client/historique.component'
+import {HeaderFinanceComponent} from './Header/header-finance.component'
+import {ReparationListeFComponent} from './finance/reparation-liste-f.component'
+import {FormBeneficeComponent} from './finance/form-benefice.component'
+import {FactureComponent} from './client/facture.component'
+import {InscriprionComponent} from './utilisateur-list/inscription.component'
 
 @NgModule({
   declarations: [
@@ -21,7 +29,15 @@ import {NavBarComponent} from './Header/nav-bar.component'
     FooterComponent,
     HeaderComponent,
     DepotVoitureComponent,
-    NavBarComponent
+    NavBarComponent,
+    ReparationListComponent,
+    DetailReparationComponent,
+    HistoriqueComponent,
+    HeaderFinanceComponent,
+    ReparationListeFComponent,
+    FormBeneficeComponent,
+    FactureComponent,
+    InscriprionComponent
   ],
   imports: [
     BrowserModule,

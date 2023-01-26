@@ -77,9 +77,15 @@ repair = [
     {
         "voiture": {
             "matricule": "1306TAB",
-            "nom": "Fenoaina",
-            "prenom": "Tony",
-            "mail": "tfenoaina@gmail.com"
+            "type": "4*4",
+            "marque": "TOYOTA",
+            "utilisateur": {
+                "nom": "Fenoaina",
+                "prenom": "Tony",
+                "mail": "tfenoaina@gmail.com"
+            },
+            "description": "Pneu crevee et vitesse coince",
+            "statut": "0"
         },
         "detail": [
             {
@@ -97,9 +103,15 @@ repair = [
     {
         "voiture": {
             "matricule": "1306TAB",
-            "nom": "Fenoaina",
-            "prenom": "Tony",
-            "mail": "tfenoaina@gmail.com"
+            "type": "4*4",
+            "marque": "TOYOTA",
+            "utilisateur": {
+                "nom": "Fenoaina",
+                "prenom": "Tony",
+                "mail": "tfenoaina@gmail.com"
+            },
+            "description": "Vitre casse",
+            "statut": "1"
         },
         "detail": [
             {
@@ -122,9 +134,15 @@ repair = [
     {
         "voiture": {
             "matricule": "1215TAB",
-            "nom": "Hanintsoa",
-            "prenom": "Elodie",
-            "mail": "andriamahanintsoelo@gmail.com"
+            "type": "4*4",
+            "marque": "TOYOTA",
+            "utilisateur": {
+                "nom": "Hanintsoa",
+                "prenom": "Elodie",
+                "mail": "andriamahanintsoelo@gmail.com"
+            },
+            "description": "Injecteur nitsifotra",
+            "statut": "0"
         },
         "detail": [
             {
@@ -149,7 +167,7 @@ db.reparation.find().pretty();
 
 db.voiture.find({ "statut": "0" }).pretty();
 db.utilisateur.find({"_id" : ObjectId("63c5b19cdc2fba8e91905b8a")}).pretty();
-db.reparation.find({ "_id": ObjectId("63becbf457672d5b733e9219") }).pretty();
+db.reparation.find({ "_id": ObjectId("63d0eaf57038e3864eeb1235") }).pretty();
 db.reparation.find({ "voiture.matricule": "1215TAB" }).pretty();
 
 db.voiture.find({ "statut": "0", "utilisateur.nom": "Nancy" }).pretty()
@@ -345,11 +363,23 @@ db.planning.aggregate(
 
 // Recherche---------------------------------
 db.reparation.find({
-    
-        $gte: ISODate("2023-01-29T00:00:00.000Z"),
+    date_debut : {
+        $gte: ISODate("2022-01-29T00:00:00.000Z"),
         $lt: ISODate("2023-02-01T00:00:00.000Z")
-    
-})
+    }      
+}).pretty()
+
+// ---------------
+db.data.find({
+    day: {
+        $gt: ISODate("2020-01-21"),
+        $lt: ISODate("2020-01-24")
+    }
+}).pretty()
+// ----------
+db.reparation.find({
+    "$date_debut" :  "2023-01-29T00:00:00.000Z"
+}).pretty()
 // Rercheche-------------------------------------------
 
-
+db.reparation.find().pretty();

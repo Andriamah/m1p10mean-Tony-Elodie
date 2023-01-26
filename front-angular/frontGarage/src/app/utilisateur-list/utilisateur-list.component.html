@@ -31,12 +31,15 @@
                             <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
                             <div class="social-login-content">
                                 <div class="social-button">
-                                    <button class="au-btn au-btn--block au-btn--blue2" >sign in </button>
+                                    <button class="au-btn au-btn--block au-btn--blue2" routerLink="/inscription" routerLinkActive="active">sign in </button>
                                 </div>
                             </div>
                         </form>
                         <div class="register-link">
 
+                        </div>
+                        <div class="alert alert-danger" role="alert" *ngIf="error==='1'">
+                            veuillez réessayer ou vous inscrire!
                         </div>
                     </div>
                 </div>

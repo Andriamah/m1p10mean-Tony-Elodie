@@ -2,18 +2,18 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.html',
+  selector: 'app-header-finance',
+  templateUrl: './header-finance.component.html',
   styles: []
 })
-export class HeaderComponent {
+export class HeaderFinanceComponent {
   constructor(
     private router: Router
   ) { }
 
   logout() {
     localStorage.removeItem('token')
-    this.router.navigate(['']);
+    this.router.navigate(['/']);
 
   }
 }

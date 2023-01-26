@@ -1,0 +1,97 @@
+<app-header></app-header>
+<app-nav-bar></app-nav-bar>
+<div class="page-container">
+    <div class="main-content">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">A propos</div>
+                        <div class="card-body card-block">
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="cc-exp" class="control-label mb-1">Matriculation :
+                                            <b>{{_reparation.voiture.matricule}}</b></label>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="cc-exp" class="control-label mb-1">Description : <b>{{_reparation.voiture.description}}</b></label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="cc-exp" class="control-label mb-1">Date deposition : <b>{{_reparation.date_debut}}</b></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="cc-exp" class="control-label mb-1">Type : <b>{{_reparation.voiture.type}}</b></label>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="cc-exp" class="control-label mb-1">Marque : <b>{{_reparation.voiture.marque}}</b></label>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="cc-exp" class="control-label mb-1">Date fin : <b>{{_reparation.date_fin}}</b></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="cc-exp" class="control-label mb-1">Avancement : </label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <div class="progress mb-2">
+											<div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="50"
+											 aria-valuemin="0" aria-valuemax="100">50%</div>
+										</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-t-30">
+                    <div class="col-md-6">
+                        <!-- DATA TABLE-->
+                        <div class="table-responsive m-b-40">
+                            <table class="table table-borderless table-data3">
+                                <thead>
+                                    <tr>
+                                        <th>Intitule</th>
+                                        <th>Etat</th>
+                                        <th>Prix</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let detail of detail_$ | async">
+                                        <td>{{detail.object}}</td>
+                                        <td><span class="badge bg-primary"
+                                            *ngIf="detail.etat==='1'; else loggedOut">Fini</span>
+                                        <ng-template #loggedOut>
+                                            <span class="badge bg-warning">En cours</span>
+                                        </ng-template></td>
+                                        <td>{{detail.prix}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- END DATA TABLE-->
+                    </div>
+                </div>
+                <app-footers></app-footers>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -5,6 +5,8 @@ const app = express()
 const nodemailer = require("nodemailer")
 
 const mail = require("./sendMail")
+const  ObjectID = require('mongodb').ObjectId;
+
 
 // ========================
 // Link to Database
@@ -24,6 +26,8 @@ function start(app = express(), db) {
     // Routes
     // ========================
 
+    
+
     // Fiche reparation en cours---------------------Mieritreritra aho oe mety ts ialiana-----------------------
     app.get('/reparation-afaire/nom=:nom', (req, res) => {
         reparationCollection.find({ "etat": "0", "voiture.nom": req.params.nom }).toArray()
@@ -33,11 +37,25 @@ function start(app = express(), db) {
             })
             .catch(/* ... */)
     })
+    app.get('/reparationGlobal', (req, res) => {
+        reparationCollection.find().toArray()
+            .then(reparataion => {
+                console.log("boby " + req.params.nom)
+                return res.json(reparataion)
+            })
+            .catch(/* ... */)
+    })
     //  List reparation en cours--------------------------------------------
 
     // Historique reparation du client--------------------------------------------
-    app.get('/historique-reparation/nom=:nom', (req, res) => {
-        reparationCollection.find({ "voiture.nom": req.params.nom }).toArray()
+    app.get('/historique-reparation/nom=:nom&debut=:debut&fin=:fin', (req, res) => {
+        reparationCollection.find({
+            "voiture.nom": req.params.nom,
+            "date_debut": {
+                $gte:new Date(req.params.debut) ,
+                $lt: new Date(req.params.fin)
+            }
+        }).toArray()
             .then(reparataion => {
                 console.log("boby")
                 return res.json(reparataion)
@@ -49,13 +67,22 @@ function start(app = express(), db) {
 
     // Fiche reparation selectionne--------------------------------------------
     app.get('/fiche-reparations/_id=:_id', (req, res) => {
-        reparationCollection.find({ "_id": req.params._id }).toArray()
+        reparationCollection.findOne({ "_id": ObjectID(req.params._id) })
             .then(reparataion => {
                 return res.json(reparataion)
             })
             .catch(/* ... */)
     })
+
+    app.get('/fiche-reparations-detail/_id=:_id', (req, res) => {
+        reparationCollection.findOne({ "_id": ObjectID(req.params._id) })
+            .then(reparataion => {
+                return res.json(reparataion.detail)
+            })
+            .catch(/* ... */)
+    })
     //  Fiche reparation selectionne--------------------------------------------
+
 
     // Valider Paiement--------------------------------------------
     app.put('/valider-paiement/_id=:_id', (req, res) => {
