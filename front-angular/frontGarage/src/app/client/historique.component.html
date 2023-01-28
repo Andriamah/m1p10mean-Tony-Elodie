@@ -14,7 +14,8 @@
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <div class="has-warning form-group">
-                                                <label for="inputIsInvalid" class=" form-control-label">Date debut</label>
+                                                <label for="inputIsInvalid" class=" form-control-label">Date
+                                                    debut</label>
                                                 <input type="datetime-local" id="inputIsInvalid" class="form-control"
                                                     name="debut" [(ngModel)]="debut">
                                             </div>
@@ -27,11 +28,11 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
-                                            <button type="button" class="btn btn-success">
+                                            <button type="submit" class="btn btn-success">
                                                 <i class="fa fa-magic"></i>&nbsp; Success</button>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </form>
                         </div>
@@ -50,28 +51,24 @@
                                     <tr class="tr-shadow" *ngFor="let reparation of reparations$ | async">
                                         <td>{{reparation.voiture.matricule}}</td>
                                         <td>
-                                            <span class="block-email">lori@example.com</span>
+                                            <span class="block-email">{{reparation.voiture.description}}</span>
                                         </td>
                                         <td>{{reparation.date_debut}}</td>
                                         <td>
-                                            <span class="status--process">Processed {{reparation.etat}}</span>
+                                            <span class="badge badge-success"
+                                                *ngIf="reparation.etat==='3'; else loggedOut">Fini{{reparation.etat}}</span>
+                                            <ng-template #loggedOut>
+                                                <span class="badge badge-warning">En cours {{reparation.etat}}</span>
+                                            </ng-template>
                                         </td>
                                         <td>
                                             <div class="table-data-feature">
                                                 <button class="item" data-toggle="tooltip" data-placement="top"
-                                                    title="Send">
-                                                    <i class="zmdi zmdi-mail-send"></i>
+                                                    title="Edit" [routerLink]="['/facture', reparation._id]">
+                                                    <i class="zmdi zmdi-card"></i>
                                                 </button>
                                                 <button class="item" data-toggle="tooltip" data-placement="top"
-                                                    title="Edit">
-                                                    <i class="zmdi zmdi-edit"></i>
-                                                </button>
-                                                <button class="item" data-toggle="tooltip" data-placement="top"
-                                                    title="Delete">
-                                                    <i class="zmdi zmdi-delete"></i>
-                                                </button>
-                                                <button class="item" data-toggle="tooltip" data-placement="top"
-                                                    title="More" routerLink="/detail-reparation"
+                                                    title="More" [routerLink]="['/detail-reparation', reparation._id]"
                                                     routerLinkActive="active">
                                                     <i class="zmdi zmdi-more"></i>
                                                 </button>

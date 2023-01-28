@@ -66,7 +66,9 @@ export class UtilisateurListComponent  {
         if (data.role === "client") {
           // var value = data._id
           var value=''+data._id!
+          var email=''+data.mail!
           localStorage.setItem('token', value)
+          localStorage.setItem('mail', email)
           this.router.navigate(['/acceuil']);
         }
         if (data.role === "financiere") {

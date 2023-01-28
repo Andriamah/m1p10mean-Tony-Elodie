@@ -48,11 +48,12 @@ function start(app = express(),db) {
 
 
       // voiture du client en reparation----------TY VO TENA TSILAIANA----------------------------------
-      app.get('/voitures-encours-client/nom=:nom', (req, res) => {
+      app.get('/voitures-encours-client/mail=:mail', (req, res) => {
         // voitureCollection.findOne({ "statut": "0" ,"utilisateur.nom" : req.params.nom})
-        voitureCollection.find({ "statut": "0", "utilisateur.nom": req.params.nom }).toArray()
+        voitureCollection.find({ "statut": "0", "utilisateur.mail": req.params.mail }).toArray()
           .then(voiture => {
             if (voiture != null) {
+              console.log(req.params.mail)
               return res.json(voiture)
             } else {
               console.log("Null")
@@ -65,8 +66,8 @@ function start(app = express(),db) {
 
 
       // Recuperer Voiture --------------------------------------------
-      app.put('/recuperer-voiture/_id=:_id', (req, res) => {
-        voitureCollection.findOneAndUpdate({ "utilisateur.nom": "Nancy" }, { $set: { "statut": 1 } })
+      app.put('/recuperer-voiture/mail=:mail&matricule=:matricule', (req, res) => {
+        voitureCollection.findOneAndUpdate({ "utilisateur.mail": req.params.mail, "statut" : 0 , "matricule" : req.params.matricule}, { $set: { "statut": 1 } })
           .then(result => {
             if (result != null) {
               return res.json(result)
@@ -77,9 +78,7 @@ function start(app = express(),db) {
           })
           .catch(error => console.error(error))
       })
-
-  
-  // Recuperer Voiture --------------------------------------------
+    // Recuperer Voiture --------------------------------------------
 
 
 }

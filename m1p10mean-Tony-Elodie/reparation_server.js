@@ -5,7 +5,7 @@ const app = express()
 const nodemailer = require("nodemailer")
 
 const mail = require("./sendMail")
-const  ObjectID = require('mongodb').ObjectId;
+const ObjectID = require('mongodb').ObjectId;
 
 
 // ========================
@@ -26,13 +26,46 @@ function start(app = express(), db) {
     // Routes
     // ========================
 
-    
+
+    // --------------------------
+
+    // function addcustomers(hello) {
+    //     console.log(hello)
+    // }
+    // module.exports = addcustomer
+
+
+    app.get('/reparation-fini', (req, res) => {
+        reparationCollection.find({ "etat": "2" }).toArray()
+            .then(reparataion => {
+                return res.json(reparataion)
+            })
+            .catch(/* ... */)
+    })
+
+
+    app.get('/Tonyyyy', async (req, res) => {
+        var variable
+        await reparationCollection.findOne({ "etat": "2" })
+            .then(reparataion => {
+                variable = reparataion
+                console.log("mandef" + variable)
+
+                return res.json(reparataion)
+            })
+
+            .catch(/* ... */)
+        // console.log(variable)
+
+        mail.addcustomer(variable.total)
+    })
+    // ----------------------------
+
 
     // Fiche reparation en cours---------------------Mieritreritra aho oe mety ts ialiana-----------------------
-    app.get('/reparation-afaire/nom=:nom', (req, res) => {
-        reparationCollection.find({ "etat": "0", "voiture.nom": req.params.nom }).toArray()
+    app.get('/reparation-afaire/mail=:mail', (req, res) => {
+        reparationCollection.find({ "etat": "0", "voiture.utilisateur.mail": req.params.mail }).toArray()
             .then(reparataion => {
-                console.log("boby " + req.params.nom)
                 return res.json(reparataion)
             })
             .catch(/* ... */)
@@ -40,7 +73,6 @@ function start(app = express(), db) {
     app.get('/reparationGlobal', (req, res) => {
         reparationCollection.find().toArray()
             .then(reparataion => {
-                console.log("boby " + req.params.nom)
                 return res.json(reparataion)
             })
             .catch(/* ... */)
@@ -48,16 +80,25 @@ function start(app = express(), db) {
     //  List reparation en cours--------------------------------------------
 
     // Historique reparation du client--------------------------------------------
-    app.get('/historique-reparation/nom=:nom&debut=:debut&fin=:fin', (req, res) => {
+    app.get('/historique-reparation-filtre/nom=:nom&debut=:debut&fin=:fin', (req, res) => {
         reparationCollection.find({
-            "voiture.nom": req.params.nom,
+            "voiture.utilisateur.mail": req.params.nom,
             "date_debut": {
-                $gte:new Date(req.params.debut) ,
+                $gte: new Date(req.params.debut),
                 $lt: new Date(req.params.fin)
             }
         }).toArray()
             .then(reparataion => {
                 console.log("boby")
+                return res.json(reparataion)
+            })
+            .catch(/* ... */)
+    })
+
+
+    app.get('/reparation-historique/mail=:mail', (req, res) => {
+        reparationCollection.find({ "voiture.utilisateur.mail": req.params.mail }).toArray()
+            .then(reparataion => {
                 return res.json(reparataion)
             })
             .catch(/* ... */)
@@ -86,105 +127,146 @@ function start(app = express(), db) {
 
     // Valider Paiement--------------------------------------------
     app.put('/valider-paiement/_id=:_id', (req, res) => {
-        //     reparationCollection.updateOne({ "_id": req.params._id }, { $set: { "etat": 111 } },{upsert: true}
-        // })
-        reparationCollection.findOneAndUpdate({ "voiture.nom": req.params._id },
-            { $set: { "etat": 1, "date_paiement": new Date() } }, { upsert: true })
+        reparationCollection.findOneAndUpdate({ "_id": ObjectID(req.params._id) },
+            { $set: { "etat": "2", "date_paiement": new Date() } }, { upsert: true })
             .then(reparataion => {
-                mail.sendMail("andriamahanintsoelo@gmail.com")
-                console.log("valisation " + req.params._id)
+                mail.sendMail(reparataion.value.voiture.utilisateur.mail, reparataion.value.voiture.matricule)
+                console.log("valisation " + reparataion.value.voiture.utilisateur.mail)
+                console.log("valisation " + reparataion.value.voiture.matricule)
+
                 return res.json(reparataion)
             })
             .catch(/* ... */)
-        db.close()
+        // db.close()
     })
     //  Valider Paiement--------------------------------------------
 
-    // Chiffre d'afaire jour--------------------------------------------
-    app.get('/chiifre_affaire', (req, res) => {
+
+    // Recuperer Voiture --------------------------------------------
+    app.put('/sortire-voiture/_id=:_id', (req, res) => {
+        reparationCollection.findOneAndUpdate({ "_id": ObjectID(req.params._id) }, { $set: { "etat": "3" } })
+            .then(result => {
+                if (result != null) {
+                    return res.json(result)
+                } else {
+                    console.log("Null")
+                }
+
+            })
+            .catch(error => console.error(error))
+    })
+    // Recuperer Voiture --------------------------------------------
+
+
+    // Moyenne--------------------------------------------
+    app.get('/temp-moyenne', (req, res) => {
         reparationCollection.aggregate([
-            { $group: { _id: "$date_debut", valeur: { $sum: "$total" } } }
-        ])
-            // reparationCollection.findOne({ "$date_debut": "2023-01-16T20:29:11.005Z" })
+            {
+                $project: {
+                    difference: {
+                        $divide: [
+                            { $subtract: [new Date(), "$date_debut"] },
+                            60000
+                        ]
+                    }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    moyenne: { $avg: "$difference" }
+                }
+            }
+        ]).toArray()
             .then(reparataion => {
                 return res.json(reparataion)
             })
-            .catch(console.log("elo"))
-        db.close()
+            .catch(error => console.error(error))
+    })
 
+
+    app.get('/temp-moyenne2', (req, res) => {
+        reparationCollection.find().toArray()
+            .then(reparataion => {
+                
+                return res.json(reparataion)
+            })
+            .catch(error => console.error(error))
+    })
+    //  Moyenne--------------------------------------------
+
+    // Chiffre d'afaire jour--------------------------------------------
+    app.get('/chiffre_affaire/jour=:jour', (req, res) => {
+        var j1 = req.params.jour + "T01:00:00"
+        var j2 = req.params.jour + "T23:59:59"
+        reparationCollection.aggregate([
+            {
+                $match: {
+                    "date_debut": {
+                        $gte: new Date(j1),
+                        $lte: new Date(j2)
+                    }
+                }
+            },
+            { $group: { _id: "$date_debut", valeur: { $sum: "$total" } } }
+        ]).toArray()
+            .then(reparations => {
+                var variable = 0
+                reparations.forEach(reparation => 
+                    variable = variable + reparation.valeur
+                    );
+                    var retour = {
+                        value: variable
+                    }
+
+                return res.json(retour)
+            })
+            .catch(error => console.error(error))
     })
     //  Chiffre d'afaire jour--------------------------------------------
 
     // // Chiffre d'afaire Mois--------------------------------------------
-    app.get('/chiifre_affaire', (req, res) => {
-        reparationCollection.aggregate(
-            [
-                {
-                    $group:
-                    {
-                        _id: { month: { $month: "$date_debut" }, year: { $year: "$date_debut" } },
-                        totalAmount: { $sum: "$total" },
-                        count: { $sum: 1 }
-                    }
-                }
-            ]
-        )
+    app.get('/chiffre_affaire/mois=:mois/annee=:annee', (req, res) => {
+        reparationCollection.aggregate([
+            { $project: { month: { $month: '$date_debut' }, year: { $year: "$date_debut" }, valeur: { $sum: "$total" } } },
+            { $match: { month: Number(req.params.mois), year: Number(req.params.annee) } }
+        ]).toArray()
             .then(reparataion => {
-                return res.json(reparataion)
+                console.log(req.params.mois + " " + req.params.annee)
+                var valeur = 0
+                reparataion.forEach(element => valeur = valeur + element.valeur);
+                var retour = {
+                    value: valeur
+                }
+                console.log(valeur)
+                return res.json(retour)
             })
-            .catch(console.log("elo"))
-        db.close()
+            .catch(error => console.error(" Ch mois"))
 
     })
     //  Chiffre d'afaire Mois--------------------------------------------
 
-    app.get('/chiffre_affaire', (req, res) => {
-        const valiny = reparationCollection.aggregate([
-            {
-                $lookup:
-                {
-                    _id: { month: { $month: "$date_debut" }, year: { $year: "$date_debut" } },
-                    totalAmount: { $sum: "$total" },
-                    count: { $sum: 1 }
+    // // Benefice--------------------------------------------
+    app.get('/benefice-mois/mois=:mois/annee=:annee/depense=:depense', (req, res) => {
+        reparationCollection.aggregate([
+            { $project: { month: { $month: '$date_debut' }, year: { $year: "$date_debut" }, valeur: { $sum: "$total" } } },
+            { $match: { month: Number(req.params.mois), year: Number(req.params.annee) } }
+        ]).toArray()
+            .then(reparataion => {
+                console.log(req.params.mois + " " + req.params.annee)
+                var valeur = 0
+                reparataion.forEach(element => valeur = valeur + element.valeur);
+                var benefice = valeur - Number(req.params.depense)
+                var retour = {
+                    value: benefice
                 }
-            }
-        ]).then(reparataion => {
-            return res.json(reparataion)
-        })
-            .catch(console.log("elo"))
-        return res.json(valiny)
+                console.log("Benefice " + benefice)
+                return res.json(retour)
+            })
+            .catch(error => console.log("manao catch"))
 
     })
-
-
-
-    // --------------------------
-    app.get('/benefice', (req, res) => {
-        var data = [{
-            id: 1, elo: 2
-        }, {
-            id: 21, elo: 2
-        }];
-
-        console.log("isany " + data.length);
-        var total = 0
-        for (const val of data) {
-            total = total + val.id
-        }
-        console.log("Valiny teooo " + total)
-        return res.json(data.length)
-        req.body.total = total
-
-    })
-
-
-    // --------------------------
-
-
-    // ========================
-    // Listen
-    // ========================
-
+    //  Benefice--------------------------------------------
 
 }
 exports.start = start;

@@ -2,67 +2,116 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, tap } from 'rxjs';
 import { Reparation } from '../Modele/reparation';
- 
+import {Depense} from '../Modele/depense'
+import { Chiffre } from '../Modele/chiffre';
+
 @Injectable({
- providedIn: 'root'
+  providedIn: 'root'
 })
 export class ReparationService {
- private url = 'http://localhost:3000';
- private reparation$: Subject<Reparation[]> = new Subject();
- private _reparation$: Subject<Reparation> = new Subject();
-  _reparation_ !: Reparation ;
+  private url = 'http://localhost:3000';
+  private reparation$: Subject<Reparation[]> = new Subject();
+  _reparation_ !: Reparation;
+  depense !: Depense
+  chiffre!: Chiffre
 
- 
- constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
-
- private refreshReparations() {
-    this.httpClient.get<Reparation[]>(`${this.url}/reparationGlobal`)
+  private refreshReparationsFini() {
+    this.httpClient.get<Reparation[]>(`${this.url}/reparation-fini`)
       .subscribe(reparations => {
         this.reparation$.next(reparations);
+        console.log(reparations)
       });
+  }
+
+  getReparationsFini(): Subject<Reparation[]> {
+    this.refreshReparationsFini();
+    return this.reparation$;
   }
   
-  private refreshHistoriques(nom:String,debut:String,fin:String) {
-    this.httpClient.get<Reparation[]>(`${this.url}/historique-reparation/nom=${nom}&debut=${debut}&fin=${fin}`)
+  private refreshReparationsEncours(mail:String) {
+    this.httpClient.get<Reparation[]>(`${this.url}/reparation-afaire/mail=${mail}`)
       .subscribe(reparations => {
         this.reparation$.next(reparations);
       });
   }
 
-  async getFicheReparation(id:String) {
+  getReparationsEncours(mail:String): Subject<Reparation[]> {
+    this.refreshReparationsEncours(mail);
+    return this.reparation$;
+  }
+
+  private refreshReparationsByUtilisateur(mail: String) {
+    this.httpClient.get<Reparation[]>(`${this.url}/reparation-historique/mail=${mail}`)
+      .subscribe(reparations => {
+        this.reparation$.next(reparations);
+      });
+  }
+
+  getReparationUtilisateu(mail: String): Observable<Reparation[]> {
+    this.refreshReparationsByUtilisateur(mail);
+    return this.reparation$;;
+  }
+
+  private refreshHistoriques(nom: String, debut: String, fin: String) {
+    this.httpClient.get<Reparation[]>(`${this.url}/historique-reparation-filtre/nom=${nom}&debut=${debut}&fin=${fin}`)
+      .subscribe(reparations => {
+        this.reparation$.next(reparations);
+      });
+  }
+
+
+  getHistoriques(nom: String, debut: String, fin: String): Subject<Reparation[]> {
+    this.refreshHistoriques(nom, debut, fin);
+    return this.reparation$;
+  }
+
+
+  async getFicheReparation(id: String) {
     this.httpClient.get<Reparation>(`${this.url}/fiche-reparations/_id=${id}`)
       .subscribe(reparations => {
         this._reparation_ = reparations
-        console.log("eloooo "+this._reparation_.total)
+        console.log("eloooo " + this._reparation_.total)
 
       });
   }
 
-  getReparations(): Subject<Reparation[]> {
-    this.refreshReparations();
-    return this.reparation$;
+  async getFicheReparationById(id: String): Promise<Reparation> {
+    await this.getFicheReparation(id);
+    console.log("anaty service   " + this._reparation_)
+
+    return this._reparation_;
   }
 
-  
-  getHistoriques(nom:String,debut:String,fin:String): Subject<Reparation[]> {
-    this.refreshHistoriques(nom,debut,fin);
-    return this.reparation$;
-  }
- 
- getReparationById(): Observable<Reparation[]> {
+  getReparationById(): Observable<Reparation[]> {
     return this.httpClient.get<Reparation[]>(`${this.url}/reparationGlobal`);
   }
 
-  getReparationp(id:String): Observable<Reparation> {
+
+  getReparationp(id: String): Observable<Reparation> {
     return this.httpClient.get<Reparation>(`${this.url}/fiche-reparations/_id=${id}`);
   }
 
-  async getFicheReparationById(id:String): Promise<Reparation> {
-    await this.getFicheReparation(id);
-    console.log("anaty service   "+this._reparation_)
+  generateBenefice(mois: String,annee: String,depense : Number): Observable<Depense> {
+    return this.httpClient.get<Depense>(`${this.url}/benefice-mois/mois=${mois}/annee=${annee}/depense=${depense}`);
+  }
 
-    return this._reparation_;
+  generateChiffreAffaireJour(jour: String): Observable<Depense> {
+    return this.httpClient.get<Depense>(`${this.url}/chiffre_affaire/jour=${jour}`);
+  }
+
+  generateChiffreAffaireJMois(mois: String,annee : String): Observable<Depense> {
+    return this.httpClient.get<Depense>(`${this.url}/chiffre_affaire/mois=${mois}/annee=${annee}`);
+  }
+  
+
+  updateReparation(id: String,reparation: Reparation): Observable<Reparation> {
+    return this.httpClient.put<Reparation>(`${this.url}/sortire-voiture/_id=${id}`,reparation);
+  }
+
+  validerPaiment(id: String,reparation: Reparation): Observable<Reparation> {
+    return this.httpClient.put<Reparation>(`${this.url}/valider-paiement/_id=${id}`,reparation);
   }
 
 }

@@ -44,6 +44,7 @@ export class DepotVoitureComponent {
         let voiture = {}
         this.utilisateurService.getUtilisateur("" + this.utilisateur).subscribe({
             next: data => {
+                console.log("le data  "+data)
                 let user = {
                     nom: data.nom,
                     prenom: data.prenom,
@@ -53,11 +54,7 @@ export class DepotVoitureComponent {
                     matricule: this.matriculation,
                     type: this.type,
                     marque: this.marque,
-                    utilisateur: {
-                        nom: data.nom,
-                        prenom: data.prenom,
-                        mail: data.mail
-                    },
+                    utilisateur: user,
                     description: this.description,
                     statut: "0"
                 }
@@ -72,9 +69,10 @@ export class DepotVoitureComponent {
                     }
 
                 })
-                console.log(voiture)
+                console.log( "La Voiture   "+JSON.stringify(voiture))
             },
             error: e => {
+                console.log("Nanao erreur")
                 console.log(e.error.error)
             }
 

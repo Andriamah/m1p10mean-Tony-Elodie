@@ -5,7 +5,32 @@
         <div class="section__content section__content--p30">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-3">
+                        <!-- DATA TABLE -->
+                        <h3 class="title-5 m-b-35">Voiture Non reçu</h3>
+                        <div class="table-responsive table-responsive-data2">
+                            <table class="table table-data2">
+                                <thead>
+                                    <tr>
+                                        <th>Matricule</th>
+                                        <th>description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="tr-shadow" *ngFor="let voiture of voitures$ | async">
+                                        <td>{{voiture.matricule}}</td>
+                                        <td>
+                                            <span class="block-email">{{voiture.description}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="spacer"></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- END DATA TABLE -->
+                    </div>
+
+                    <div class="col-lg-8">
                         <!-- DATA TABLE -->
                         <h3 class="title-5 m-b-35">Vos reparation en cours</h3>
                         <div class="table-responsive table-responsive-data2">
@@ -36,15 +61,15 @@
                                         <td>
                                             <div class="table-data-feature">
                                                 <button class="item" data-toggle="tooltip" data-placement="top"
-                                                    title="Edit" [routerLink]="['/facture', reparation._id]">
+                                                    title="Facture" [routerLink]="['/facture', reparation._id]">
                                                     <i class="zmdi zmdi-card"></i>
                                                 </button>
                                                 <button class="item" data-toggle="tooltip" data-placement="top"
-                                                    title="Delete">
+                                                    title="Annuler">
                                                     <i class="zmdi zmdi-delete"></i>
                                                 </button>
                                                 <button class="item" data-toggle="tooltip" data-placement="top"
-                                                    title="More" [routerLink]="['/detail-reparation', reparation._id]"
+                                                    title="Voir" [routerLink]="['/detail-reparation', reparation._id]"
                                                     routerLinkActive="active">
                                                     <i class="zmdi zmdi-more"></i>
                                                 </button>

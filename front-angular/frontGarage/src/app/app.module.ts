@@ -21,6 +21,7 @@ import {ReparationListeFComponent} from './finance/reparation-liste-f.component'
 import {FormBeneficeComponent} from './finance/form-benefice.component'
 import {FactureComponent} from './client/facture.component'
 import {InscriprionComponent} from './utilisateur-list/inscription.component'
+import {ChiffreAffaireComponent} from './finance/chiffre-affaire.component'
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {InscriprionComponent} from './utilisateur-list/inscription.component'
     ReparationListeFComponent,
     FormBeneficeComponent,
     FactureComponent,
-    InscriprionComponent
+    InscriprionComponent,
+    ChiffreAffaireComponent
   ],
   imports: [
     BrowserModule,

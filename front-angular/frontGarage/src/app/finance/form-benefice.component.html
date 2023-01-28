@@ -4,47 +4,83 @@
     <div class="main-content">
         <div class="section__content section__content--p30">
             <div class="container-fluid">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <h3 class="title-5 m-b-35">Generer benefice</h3>
                     <div class="card">
                         <div class="card-header">A propos</div>
                         <div class="card-body card-block">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <p>Matricule  : </p>
+                            <form (submit)="generate()">
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="cc-exp" class="control-label mb-1">Mois</label>
+                                            <input id="cc-exp" name="Matriculation" type="number"
+                                                class="form-control cc-exp" [(ngModel)]="mois">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cc-exp" class="control-label mb-1">Salaire</label>
+                                            <input id="cc-exp" name="Matriculation" type="number"
+                                                class="form-control cc-exp" [(ngModel)]="salaire">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cc-exp" class="control-label mb-1">Loyer</label>
+                                            <input id="cc-exp" name="Matriculation" type="number"
+                                                class="form-control cc-exp" [(ngModel)]="loyer">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="cc-exp" class="control-label mb-1">Annee</label>
+                                            <input id="cc-exp" name="Matriculation" type="number"
+                                                class="form-control cc-exp" [(ngModel)]="annee">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cc-exp" class="control-label mb-1"> Achat pièce</label>
+                                            <input id="cc-exp" name="Matriculation" type="number"
+                                                class="form-control cc-exp" [(ngModel)]="achat_piece">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cc-exp" class="control-label mb-1"> Autres dépenses</label>
+                                            <input id="cc-exp" name="Matriculation" type="number"
+                                                class="form-control cc-exp" [(ngModel)]="autres_depenses">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary btn-lg">Valider</button>
+                                        </div>
+                                        <div class="form-group">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <p>description : </p>
-                                    </div>
-                                </div>
+                            </form>
+
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="au-card au-card--bg-blue au-card-top-countries m-b-30">
-                            <div class="au-card-inner">
-                                <div class="table-responsive">
-                                    <table class="table table-top-countries">
-                                        <tbody>
-                                            <tr>
-                                            </tr>
-                                            <tr>
-                                                <td>Benefice</td>
-                                                <td class="text-right">$70,261.65</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="au-card au-card--bg-blue au-card-top-countries m-b-30">
+                                <div class="au-card-inner">
+                                    <div class="table-responsive">
+                                        <table class="table table-top-countries">
+                                            <tbody>
+                                                <tr>
+                                                </tr>
+                                                <tr>
+                                                    <td>Benefice</td>
+                                                    <td class="text-right">{{depenseeee.value}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <app-footers></app-footers>
+                    <app-footers></app-footers>
 
+                </div>
             </div>
         </div>
     </div>
-</div>

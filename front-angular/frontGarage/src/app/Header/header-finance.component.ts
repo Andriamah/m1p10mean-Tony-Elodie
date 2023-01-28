@@ -13,6 +13,7 @@ export class HeaderFinanceComponent {
 
   logout() {
     localStorage.removeItem('token')
+    localStorage.removeItem('mail')
     this.router.navigate(['/']);
 
   }

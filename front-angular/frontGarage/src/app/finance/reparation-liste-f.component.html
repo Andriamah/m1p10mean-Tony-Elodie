@@ -12,19 +12,29 @@
                                 <thead>
                                     <tr>
                                         <th>Intitule</th>
+                                        <th>Email</th>
+                                        <th>Date</th>
                                         <th>Etat</th>
                                         <th>Prix</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>2018-09-29 05:57</td>
-                                        <td>Mobile</td>
-                                        <td>iPhone X 64Gb Grey</td>
-                                        <td><button type="reset" class="btn btn-success btn-sm">
-                                            <i class="fa fa-dot-circle-o"></i> Payer
-                                        </button></td>
+                                    <tr *ngFor="let reparation of reparations$ | async">
+                                        <td>{{reparation.voiture.matricule}}</td>
+                                        <td>{{reparation?.voiture?.utilisateur?.mail}}</td>
+                                        <td>{{reparation.date_debut}}</td>
+                                        <td>
+                                            <span class="badge badge-primary"
+                                                *ngIf="reparation.etat==='2'; else loggedOut">Fini</span>
+                                            <ng-template #loggedOut>
+                                                <span class="badge bg-warning">En cours</span>
+                                            </ng-template>
+                                        </td>
+                                        <td>{{reparation.total}}</td>
+                                        <td><button type="reset" class="btn btn-success btn-sm" (click)="payer(reparation._id)">
+                                                <i class="fa fa-dot-circle-o"></i> Payer
+                                            </button></td>
                                     </tr>
                                 </tbody>
                             </table>

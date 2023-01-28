@@ -15,16 +15,18 @@ export class HistoriqueComponent implements OnInit {
   // DECLARATION
   debut = ''
   fin = ''
+  mail = localStorage.getItem('mail')?.toString();
 
   ngOnInit(): void {
     this.fetchEmployees();
   }
 
   private fetchEmployees(): void {
-    this.reparations$ = this.reparationService.getReparations();
+    this.reparations$ = this.reparationService.getReparationUtilisateu(this.mail+"");
   }
 
   recherche(){
-    this.reparations$ = this.reparationService.getHistoriques("Fenoaina",this.debut,this.fin);
+    console.log("historique")
+    this.reparations$ = this.reparationService.getHistoriques(this.mail+"",this.debut,this.fin);
   }
 }
