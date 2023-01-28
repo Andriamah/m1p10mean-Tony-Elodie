@@ -14,6 +14,9 @@ import {ChiffreAffaireComponent} from './finance/chiffre-affaire.component'
 import {TempReparationComponent} from './finance/temp_moyenne.component'
 import {LoginAtelierComponent} from './utilisateur-list/login-atelier.component'
 import {LoginFinanceComponent} from './utilisateur-list/login-finance.component'
+import { ReceptionComponent } from './reception/reception.component';
+import { DiagnosticComponent } from './diagnostic/diagnostic.component';
+import { ReparartionComponent } from './reparartion/reparartion.component';
 
 const appRoutes: Routes = [
   { path: 'acceuil', component: DepotVoitureComponent },
@@ -29,7 +32,9 @@ const appRoutes: Routes = [
   { path: 'moyenne', component: TempReparationComponent },
   { path: 'atelier', component: LoginAtelierComponent },
   { path: 'finance', component: LoginFinanceComponent },
-
+  { path: 'reception', component: ReceptionComponent },
+  { path: 'diagnostic', component: DiagnosticComponent },
+  { path: 'reception/reparation/:matricule', component: ReparartionComponent },
 
 
 
