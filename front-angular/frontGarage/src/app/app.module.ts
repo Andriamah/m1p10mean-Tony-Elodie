@@ -23,6 +23,8 @@ import {FactureComponent} from './client/facture.component'
 import {InscriprionComponent} from './utilisateur-list/inscription.component'
 import {ChiffreAffaireComponent} from './finance/chiffre-affaire.component'
 import {TempReparationComponent} from './finance/temp_moyenne.component'
+import {LoginAtelierComponent} from './utilisateur-list/login-atelier.component'
+import {LoginFinanceComponent} from './utilisateur-list/login-finance.component'
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import {TempReparationComponent} from './finance/temp_moyenne.component'
     FactureComponent,
     InscriprionComponent,
     ChiffreAffaireComponent,
-    TempReparationComponent
+    TempReparationComponent,
+    LoginFinanceComponent,
+    LoginAtelierComponent
   ],
   imports: [
     BrowserModule,

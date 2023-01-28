@@ -12,6 +12,8 @@ import {FactureComponent} from './client/facture.component'
 import {InscriprionComponent} from './utilisateur-list/inscription.component'
 import {ChiffreAffaireComponent} from './finance/chiffre-affaire.component'
 import {TempReparationComponent} from './finance/temp_moyenne.component'
+import {LoginAtelierComponent} from './utilisateur-list/login-atelier.component'
+import {LoginFinanceComponent} from './utilisateur-list/login-finance.component'
 
 const appRoutes: Routes = [
   { path: 'acceuil', component: DepotVoitureComponent },
@@ -25,6 +27,10 @@ const appRoutes: Routes = [
   { path: 'inscription', component: InscriprionComponent },
   { path: 'statistique', component: ChiffreAffaireComponent },
   { path: 'moyenne', component: TempReparationComponent },
+  { path: 'atelier', component: LoginAtelierComponent },
+  { path: 'finance', component: LoginFinanceComponent },
+
+
 
 
 ];
