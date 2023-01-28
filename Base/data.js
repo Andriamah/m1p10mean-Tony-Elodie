@@ -214,18 +214,6 @@ db.reparation.insert([
         "total": 12000
     },])
 
-detail = [
-    {
-        "matricule": "1306TAB",
-        "status": "0",
-        "prix": 5000,
-        "object": "Pneu",
-
-    }
-
-
-];
-
 db.utilisateur.find().pretty();
 db.voiture.find().pretty();
 db.reparation.find().pretty();

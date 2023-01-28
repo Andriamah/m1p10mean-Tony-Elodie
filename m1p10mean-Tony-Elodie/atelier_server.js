@@ -44,19 +44,37 @@ function start(app = express(), db) {
     reparationcollection.insertOne(req.body);
   })
 
-  app.post('/finir_detail_reparation', (req, res) => {
+
+  app.put('/valider-paiement/_id=:_id', (req, res) => {
+    //     reparationCollection.updateOne({ "_id": req.params._id }, { $set: { "etat": 111 } },{upsert: true}
+    // })
+    reparationCollection.findOneAndUpdate({ "voiture.nom": req.params._id },
+        { $set: { "etat": 1, "date_paiement": new Date() } }, { upsert: true })
+        .then(reparataion => {
+            console.log("valisation " + req.params._id)
+            return res.json(reparataion)
+        })
+        .catch(/* ... */)
+    db.close()
+})
+
+  app.put('/finir_detail_reparation', (req, res) => {
+    console.log("matricule")
+    console.log(req.body.matricule)
+    console.log("detail")
+    console.log(req.body.detail)
     reparationcollection.findOneAndUpdate(
       {"voiture.matricule":req.body.matricule,"etat":"0"},
       {
         $set: {
-          "detail": [
+          "detail": 
            req.body.detail
-        ],
         },
       
       }
     )
       .then(result => res.json('Success'))
+      // console.log("poinsa")
       .catch(error => console.error(error))
   })
 
