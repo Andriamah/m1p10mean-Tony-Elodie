@@ -11,9 +11,10 @@ import { Chiffre } from '../Modele/chiffre';
 export class ReparationService {
   private url = 'http://localhost:3000';
   private reparation$: Subject<Reparation[]> = new Subject();
+  private moyenne$: Subject<Chiffre[]> = new Subject();
+
   _reparation_ !: Reparation;
   depense !: Depense
-  chiffre!: Chiffre
 
   constructor(private httpClient: HttpClient) { }
 
@@ -67,6 +68,22 @@ export class ReparationService {
     return this.reparation$;
   }
 
+  private refreshTempsMoyenne() {
+    this.httpClient.get<Chiffre[]>(`${this.url}/temp-moyenne2`)
+      .subscribe(moyenne => {
+        this.moyenne$.next(moyenne);
+      });
+  }
+
+
+  getTempsMoyenne(): Subject<Chiffre[]> {
+    this.refreshTempsMoyenne();
+    return this.moyenne$;
+  }
+
+  // getTempsMoyenne(): Observable<Chiffre[]> {
+  //   return this.httpClient.get<Chiffre[]>(`${this.url}/temp-moyenne2`);
+  // }
 
   async getFicheReparation(id: String) {
     this.httpClient.get<Reparation>(`${this.url}/fiche-reparations/_id=${id}`)

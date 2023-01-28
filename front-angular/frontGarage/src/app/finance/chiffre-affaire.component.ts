@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReparationService } from '../Service/reparation.service'
 import { Depense } from '../Modele/depense'
-import { Chiffre } from '../Modele/chiffre';
 
 @Component({
   selector: 'app-chiffre-affaire',
@@ -11,7 +10,6 @@ import { Chiffre } from '../Modele/chiffre';
 })
 export class ChiffreAffaireComponent {
   chiffre_affaire!: Depense
-  chiffre_du_jour!: Chiffre
 
   constructor(
     private router: Router,

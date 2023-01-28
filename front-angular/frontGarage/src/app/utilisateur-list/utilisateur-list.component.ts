@@ -78,6 +78,14 @@ export class UtilisateurListComponent  {
           localStorage.setItem('token', value)
           this.router.navigate(['/acceuil-finance']);
         } 
+        if (data.role === "atelier") {
+          console.log("fiance tsika")
+          // var value = data._id
+          var value=''+data._id!
+          localStorage.setItem('token', value)
+          //ito ny Route an Tonyyy
+          this.router.navigate(['/reception']);
+        } 
         
         else {
           this.error = "1"

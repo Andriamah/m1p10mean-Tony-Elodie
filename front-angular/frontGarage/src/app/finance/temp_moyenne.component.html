@@ -1,0 +1,44 @@
+<app-header-finance></app-header-finance>
+<app-nav-bar></app-nav-bar>
+<div class="page-container">
+    <div class="main-content">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row m-t-30">
+                    <div class="col-md-12">
+                        <!-- DATA TABLE-->
+                        <div class="table-responsive m-b-40">
+                            <table class="table table-borderless table-data3">
+                                <thead>
+                                    <tr>
+                                        <th>Matricule</th>
+                                        <th>Date</th>
+                                        <th>Nb reparation</th>
+                                        <th>Duree <small>(en minute)</small></th>
+                                        <th>Moyenne</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let temps_moyenne of temps_moyennes$ | async">
+                                        <td>{{temps_moyenne.matricule}}</td>
+                                        <td>{{temps_moyenne.date_debut}}</td>
+                                        <td>{{temps_moyenne.nbDdetail}}</td>
+                                        <td>{{temps_moyenne.duree}}</td>
+                                        <td>{{temps_moyenne.moyenne}}</td>
+                                        <td><button type="reset" class="btn btn-success btn-sm" >
+                                                <i class="fa fa-dot-circle-o"></i> Payer
+                                            </button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- END DATA TABLE-->
+                    </div>
+                </div>
+                <app-footers></app-footers>
+
+            </div>
+        </div>
+    </div>
+</div>

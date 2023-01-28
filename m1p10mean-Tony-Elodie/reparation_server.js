@@ -186,10 +186,31 @@ function start(app = express(), db) {
 
 
     app.get('/temp-moyenne2', (req, res) => {
-        reparationCollection.find().toArray()
-            .then(reparataion => {
-                
-                return res.json(reparataion)
+        reparationCollection.find({
+            etat: {
+                $gte: "2"
+            }
+        }).toArray()
+            .then(reparations => {
+                var retour = []
+                var size = reparations.length
+                for (let step = 0; step < size; step++) {
+
+                    console.log("chr : " + reparations[step].date_debut + " and   " + reparations[step].date_fin)
+                    var la_duree = mail.calcule_difference_date(reparations[step].date_debut, reparations[step].date_fin)
+                    var la_moyenne = (la_duree) / reparations[step].detail.length
+                    let moyenne = {
+                        id: reparations[step]._id,
+                        matricule : reparations[step].voiture.matricule,
+                        date_debut: reparations[step].date_debut,
+                        duree: la_duree,
+                        moyenne: la_moyenne,
+                        nbDdetail: reparations[step].detail.length
+                    }
+
+                    retour.push(moyenne)
+                }
+                return res.json(retour)
             })
             .catch(error => console.error(error))
     })
@@ -212,12 +233,12 @@ function start(app = express(), db) {
         ]).toArray()
             .then(reparations => {
                 var variable = 0
-                reparations.forEach(reparation => 
+                reparations.forEach(reparation =>
                     variable = variable + reparation.valeur
-                    );
-                    var retour = {
-                        value: variable
-                    }
+                );
+                var retour = {
+                    value: variable
+                }
 
                 return res.json(retour)
             })

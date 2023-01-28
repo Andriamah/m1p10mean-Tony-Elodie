@@ -22,6 +22,7 @@ import {FormBeneficeComponent} from './finance/form-benefice.component'
 import {FactureComponent} from './client/facture.component'
 import {InscriprionComponent} from './utilisateur-list/inscription.component'
 import {ChiffreAffaireComponent} from './finance/chiffre-affaire.component'
+import {TempReparationComponent} from './finance/temp_moyenne.component'
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {ChiffreAffaireComponent} from './finance/chiffre-affaire.component'
     FormBeneficeComponent,
     FactureComponent,
     InscriprionComponent,
-    ChiffreAffaireComponent
+    ChiffreAffaireComponent,
+    TempReparationComponent
   ],
   imports: [
     BrowserModule,

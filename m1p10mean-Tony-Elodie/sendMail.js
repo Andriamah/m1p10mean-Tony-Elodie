@@ -4,7 +4,7 @@ const MongoClient = require('mongodb').MongoClient
 const app = express()
 const nodemailer = require("nodemailer")
 
-async function sendMail  (mail,matricule) {
+async function sendMail(mail, matricule) {
     console.log('Hello elo')
     let transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -18,8 +18,8 @@ async function sendMail  (mail,matricule) {
         from: 'wendydarling1215@gmail.com', // sender address
         to: mail, // list of receivers
         subject: "Paiement", // Subject line
-        text: "Votre paiement a abouti avec succes \n"+
-        "Matricule "+matricule
+        text: "Votre paiement a abouti avec succes \n" +
+            "Matricule " + matricule
     };
     const info = transporter.sendMail(msg, function (error, ifon) {
         console.log("Vo anomboka")
@@ -35,10 +35,17 @@ async function sendMail  (mail,matricule) {
 
 exports.sendMail = sendMail;
 
-async function addcustomer  (variable) {
-    console.log(variable)
-  }
-exports.addcustomer = addcustomer
+function calcule_difference_date(debut,fin) {
+    var diffMs = (fin - debut); // milliseconds between now & Christmas
+    var diffDays = Math.floor(diffMs / 86400000); // days
+    var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+    var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minute
+    
+    var retour = (diffDays*1440)+(diffHrs*60)+diffMins
+    console.log("Ny retour "+retour)
+    return (retour)
+}
+exports.calcule_difference_date = calcule_difference_date
 
 /**app.get('/send_mail', (req, res) => {
         console.log("coucou")
