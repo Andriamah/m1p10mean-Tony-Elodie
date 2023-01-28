@@ -5,11 +5,11 @@ import { Router } from '@angular/router';
 import { UtilisateurService } from '../Service/utilisateur.service';
 
 @Component({
-  selector: 'app-utilisateur-list',
-  templateUrl: './utilisateur-list.component.html',
+  selector: 'app-login-atelier',
+  templateUrl: './login-atelier.component.html',
   // styles:['login_style.css']
 })
-export class UtilisateurListComponent  {
+export class LoginAtelierComponent  {
   // ==constructeur
   constructor(private utilisateurService: UtilisateurService,
     private router: Router
@@ -24,10 +24,8 @@ export class UtilisateurListComponent  {
   mdp = ''
   error =''
 
-  email = 'tfenoaina@gmail.com'
+  email = 'andriamahanintsoelo@gmail.com'
   pswd = '1234'
-
-  
 
   login() {
     console.log(this.email)
@@ -42,14 +40,14 @@ export class UtilisateurListComponent  {
     this.utilisateurService.login(_utilisateur_).subscribe({
       next: data => {
         console.log("ito ooo " + data.role)
-        if (data.role === "client") {
+        if (data.role === "atelier") {
+          console.log("fiance tsika")
           // var value = data._id
           var value=''+data._id!
-          var email=''+data.mail!
           localStorage.setItem('token', value)
-          localStorage.setItem('mail', email)
-          this.router.navigate(['/acceuil']);
-        }
+          //ito ny Route an Tonyyy
+          this.router.navigate(['/reception']);
+        } 
         
         else {
           this.error = "1"

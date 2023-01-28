@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,11 +23,8 @@ import {FactureComponent} from './client/facture.component'
 import {InscriprionComponent} from './utilisateur-list/inscription.component'
 import {ChiffreAffaireComponent} from './finance/chiffre-affaire.component'
 import {TempReparationComponent} from './finance/temp_moyenne.component'
-import { ReceptionComponent } from './reception/reception.component';
-import { ReparartionComponent } from './reparartion/reparartion.component';
-import { DiagnosticComponent } from './diagnostic/diagnostic.component';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { HeaderAtelierComponent } from './Header/header-atelier.component';
+import {LoginAtelierComponent} from './utilisateur-list/login-atelier.component'
+import {LoginFinanceComponent} from './utilisateur-list/login-finance.component'
 
 @NgModule({
   declarations: [
@@ -35,7 +32,6 @@ import { HeaderAtelierComponent } from './Header/header-atelier.component';
     UtilisateurListComponent,
     FooterComponent,
     HeaderComponent,
-    HeaderAtelierComponent,
     DepotVoitureComponent,
     NavBarComponent,
     ReparationListComponent,
@@ -48,18 +44,14 @@ import { HeaderAtelierComponent } from './Header/header-atelier.component';
     InscriprionComponent,
     ChiffreAffaireComponent,
     TempReparationComponent,
-    UtilisateurListComponent,
-    ReceptionComponent,
-    ReparartionComponent,
-    DiagnosticComponent
+    LoginFinanceComponent,
+    LoginAtelierComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
-    DragDropModule,
-    ReactiveFormsModule
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
