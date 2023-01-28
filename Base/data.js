@@ -4,6 +4,8 @@ use garage;
 db.createCollection("utilisateur");
 db.createCollection("voiture");
 db.createCollection("reparation");
+db.createCollection("detail");
+
 
 user = [
     {
@@ -44,7 +46,7 @@ car = [
             "mail": "tfenoaina@gmail.com"
         },
         "description": "Pneu crevee et vitesse coince",
-        "statut": "1"
+        "statut": "0"
     },
     {
         "matricule": "1306TAB",
@@ -72,6 +74,21 @@ car = [
     }
 ];
 db.voiture.insert(car);
+
+db.voiture.insert([
+    {
+        "matricule": "2629TAB",
+        "type": "Starlet",
+        "marque": "TOYOTA",
+        "utilisateur": {
+            "nom": "Fenoaina",
+            "prenom": "Tony",
+            "mail": "tfenoaina@gmail.com"
+        },
+        "description": "Pneu crevee et vitesse coince",
+        "statut": "0"
+    },]);
+
 
 repair = [
     {
@@ -125,24 +142,24 @@ repair = [
                 "etat": "0"
             }
         ],
-        "etat": "3",
+        "etat": "0",
         "date_paiement": "",
         "date_debut": new Date(),
         "date_fin": "",
         "total": 20000
     },
     {
-        "voiture": {
-            "matricule": "1215TAB",
-            "type": "4*4",
-            "marque": "TOYOTA",
-            "utilisateur": {
-                "nom": "Hanintsoa",
-                "prenom": "Elodie",
-                "mail": "andriamahanintsoelo@gmail.com"
-            },
-            "description": "Injecteur nitsifotra",
-            "statut": "0"
+        "voiture": {   
+        "matricule": "1215TAB",
+        "type": "4*4",
+        "marque": "TOYOTA",
+        "utilisateur": {
+            "nom": "Hanintsoa",
+            "prenom": "Elodie",
+            "mail": "andriamahanintsoelo@gmail.com"
+        },
+        "description": "Injecteur nitsifotra",
+        "statut": "0"
         },
         "detail": [
             {
@@ -151,7 +168,7 @@ repair = [
                 "etat": "0"
             }
         ],
-        "etat": "2",
+        "etat": "0",
         "date_paiement": "",
         "date_debut": new Date(),
         "date_fin": "",
@@ -159,36 +176,61 @@ repair = [
     }
 ];
 db.reparation.insert(repair);
+db.reparation.insert([
+    {
+        "voiture": {
+            "matricule": "2629TAB",
+            "type": "Starlet",
+            "marque": "TOYOTA",
+            "utilisateur": {
+                "nom": "Fenoaina",
+                "prenom": "Tony",
+                "mail": "tfenoaina@gmail.com"
+            },
+            "description": "Pneu crevee et vitesse coince",
+            "statut": "0"
+        },
+        "detail": [
+            {
+                "prix": 12000,
+                "object": "Vitre",
+                "etat": "0"
+            },
+            {
+                "prix": 12000,
+                "object": "Pneu",
+                "etat": "0"
+            },
+            {
+                "prix": 12000,
+                "object": "Direction",
+                "etat": "0"
+            }
+        ],
+        "etat": "0",
+        "date_paiement": "",
+        "date_debut": new Date(),
+        "date_fin": "",
+        "total": 12000
+    },])
+
 db.utilisateur.find().pretty();
 db.voiture.find().pretty();
 db.reparation.find().pretty();
 
 
 
-db.voiture.find({ "utilisateur.mail": "tfenoaina@gmail.com", "statut": "0" }).pretty();
-db.voiture.find().pretty();
-
-
-
-db.utilisateur.find({ "_id": ObjectId("63c5b19cdc2fba8e91905b8a") }).pretty();
-db.reparation.find({ "_id": ObjectId("63d0eaf57038e3864eeb1235") }).pretty();
+db.voiture.find({ "statut": "0" }).pretty();
+db.reparation.find({ "_id": ObjectId("63becbf457672d5b733e9219") }).pretty();
 db.reparation.find({ "voiture.matricule": "1215TAB" }).pretty();
 
 db.voiture.find({ "statut": "0", "utilisateur.nom": "Nancy" }).pretty()
-db.reparation.update({ "_id": ObjectId("63d2a0062415c67de92f163b") }, { $set: { "date_debut": new Date("2022-02-29T00:00:00.000Z"), } })
-
+db.reparation.update({ "_id": ObjectId("63c51f093a8c6451eefa84d7") }, { $set: { "etat": 0, "date_paiement": "" } })
 db.voiture.deleteOne({ "_id": ObjectId("63c2ef15f377a6461c92fa7c") })
 
 db.reparation.update({ "etat": "0" }, { $set: { "date_fin": new Date() } })
 
 // ty no mety CF par jour--------------------------
-db.reparation.aggregate([
-    { $group: { _id: "$date_debut", valeur: { $sum: "$total" } } }
-]).pretty()
-
-
-
-
 db.reparation.aggregate([
     { $group: { _id: "$date_debut", valeur: { $sum: "$total" } } }
 ]).pretty()
@@ -202,7 +244,6 @@ db.reparation.aggregate(
             $group:
             {
                 _id: { month: { $month: "$date_debut" }, year: { $year: "$date_debut" } },
-                month: { $month: "$date_debut" },
                 totalAmount: { $sum: "$total" },
                 count: { $sum: 1 }
             }
@@ -219,42 +260,19 @@ db.reparation.aggregate([
 ]).pretty()
 
 
-db.reparation.aggregate([
-    { $project: { month: { $month: '$date_debut' }, year: { $year: "$date_debut" }, valeur: { $sum: "$total" } } },
-    { $match: { month: 1, year: 2023 } }
-]);
-
-
-db.reparation.aggregate([
-    {
-        $match: {
-            date_debut: {
-                $gte: new Date("2023-01-26"),
-                $lt: new Date("2023-01-26 23:59:59")
+db.reparayion.aggregate([{ $group: { _id: "$team", avg_val: { $avg: "$points" } } }])
+db.reparation.aggregate([{
+    $project: {
+        avg: {
+            $dateDiff: {
+                startDate: "$date_debut",
+                endDate: "$date_fin",
+                unit: "day"
             }
         }
-    },
-    { $group: { _id: "$date_debut", valeur: { $sum: "$total" } } }
-])
+    }
+}])
 
-
-db.reparation.aggregate([
-    {
-        $match: {
-            "date_debut": {
-                $gt: new Date("2022-01-26"),
-                $lt: new Date("2024-01-26 23:59:59")
-            }
-        }
-    },
-    { $group: { _id: "$date_debut", valeur: { $sum: "$total" } } }
-]).pretty()
-
-
-db.reparation.aggregate([
-    { $match: { date_debut: new Date("2023-01-26") } },
-    { $group: { _id: "$date_debut", valeur: { $sum: "$total" } } }
-]).pretty()
 
 db.reparation.aggregate(
     [
@@ -329,7 +347,7 @@ db.reparation.aggregate([
     },
     {
         $group: {
-            _id: "_id",
+            _id: null,
             totalDifference: { $avg: "$difference" }
         }
     }
@@ -360,20 +378,7 @@ db.reparation.aggregate([{ $addFields: { timeDiff: { $subract: [5, 8] } } }])
 
 
 
-db.reparation.find({ "date_debut": {
-    $gt: new Date("2023-01-26T01:00:00"),
-    $lt: new Date("2023-01-26T23:59:59")
-} }).pretty();
-
-db.reparation.aggregate([
-    { $match: { 
-        "date_debut": {
-            $gt: new Date("2023-01-26T01:00:00"),
-            $lt: new Date("2023-01-26T23:59:59")
-        } 
-    } },
-    { $group: { _id: "$date_debut", valeur: { $sum: "$total" } } }
-]).pretty()
+db.reparation.find({ "etat": "0", "voiture.prenom": "Tony" }).pretty();
 
 
 
@@ -414,77 +419,11 @@ db.planning.aggregate(
 
 // Recherche---------------------------------
 db.reparation.find({
-    date_debut: {
-        $gte: ISODate("2022-01-29T00:00:00.000Z"),
-        $lt: ISODate("2023-02-01T00:00:00.000Z")
-    }
-}).pretty()
 
-// ---------------
-db.data.find({
-    day: {
-        $gt: ISODate("2020-01-21"),
-        $lt: ISODate("2020-01-24")
-    }
-}).pretty()
-// ----------
-db.reparation.find({
-    "$date_debut": "2023-01-29T00:00:00.000Z"
-}).pretty()
+    $gte: ISODate("2023-01-29T00:00:00.000Z"),
+    $lt: ISODate("2023-02-01T00:00:00.000Z")
+
+})
 // Rercheche-------------------------------------------
 
-db.reparation.find().pretty();
 
-
-
-
-
-
-
-
-
-
-
-db.voiture.aggregate(
-    [{ $match: { matricule: "1215TBL" } }]
-);
-
-
-
-db.reparation.aggregate([
-    { $group: { _id: "$date_debut", valeur: { $sum: "$total" } } }
-]).pretty()
-
-ISODate("2023-01-26T15:45:09.974")
-
-db.reparation.aggregate([
-    { $match: { date_debut: ISODate("2023-01-26 15:45:09.974Z") } },
-    { $group: { _id: "$date_debut", valeur: { $sum: "$total" } } }
-])
-
-
-db.reparation.aggregate([
-    { $match: { date_debut: ISODate("2023-01-26 15:45:09.974Z") } }
-])
-
-
-
-reparationCollection.aggregate(
-    [
-        {
-            $group:
-            {
-                _id: { month: { $month: "$date_debut" }, year: { $year: "$date_debut" } },
-                totalAmount: { $sum: "$total" },
-                count: { $sum: 1 }
-            }
-        }
-    ]
-)
-
-
-
-db.reparation.aggregate([
-    { $project: { month: { $month: '$date_debut' }, year: { $year: "$date_debut" }, valeur: { $sum: "$total" } } },
-    { $match: { month: 1, year: 2023 } }
-])

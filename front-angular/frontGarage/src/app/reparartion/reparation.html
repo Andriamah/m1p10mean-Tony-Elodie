@@ -1,0 +1,70 @@
+<div class="row">
+   
+    <div class="col-lg-6">
+        <div class="au-card au-card--no-shadow au-card--no-pad m-b-40 au-card--border">
+            <div class="au-card-title" style="background-image:url('assets/images/logo.jpg');">
+                <div class="bg-overlay bg-overlay--blue"></div>
+                <h3>
+                    <i class="zmdi zmdi-account-calendar"></i>Reparation en cours</h3>
+
+            </div>
+            <div class="au-task js-list-load au-task--border">
+                <div class="au-task__title">
+                    <p>AVANCEMENT : {{avancement}}</p>
+                </div>
+                <div class="au-task-list js-scrollbar3">
+                    <div class="au-task__item au-task__item--danger">
+                        <div class="au-task__item-inner">
+                            <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo" [cdkDropListConnectedTo]="[doneList]" [cdkDropListEnterPredicate]="test"
+                            class="example-list" (cdkDropListDropped)="drop($event)">
+                            <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}} <span class="time"><i class="fa fa-arrow-right"></i></span> </div>
+
+                        </div>
+                            <!-- <h5 class="task">
+                                <a href="#">Meeting about plan for Admin Template 2018</a>
+                            </h5>
+                            <span class="time">10:00 AM</span> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="au-card au-card--no-shadow au-card--no-pad m-b-40 au-card--border">
+            <div class="au-card-title" style="background-image:url('assets/images/logo.jpg');">
+                <div class="bg-overlay bg-overlay--blue"></div>
+                <h3>
+                    <i class="zmdi zmdi-account-calendar"></i>Fini</h3>
+                
+            </div>
+            <div class="au-task js-list-load au-task--border">
+                <div class="au-task__title">
+                    <p>Reparation de 1306TAB</p>
+                </div>
+                <div class="au-task-list js-scrollbar3">
+                    <div class="au-task__item au-task__item--danger">
+                        <div class="au-task__item-inner">
+                            <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
+                            [cdkDropListConnectedTo]="[todoList]" class="example-list"
+                            (cdkDropListDropped)="drop($event)">
+
+                            <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
+
+                        </div>
+                            <!-- <h5 class="task">
+                                <a href="#">Meeting about plan for Admin Template 2018</a>
+                            </h5>
+                            <span class="time">10:00 AM</span> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</div>
+
+
+

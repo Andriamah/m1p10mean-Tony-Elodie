@@ -1,7 +1,6 @@
 export interface Detail {
-
-    prix?: Number,
-    object?: String,
-    etat?: String
+    prix?:Number,
+    object:string,
+    etat?:String,
 
 }
