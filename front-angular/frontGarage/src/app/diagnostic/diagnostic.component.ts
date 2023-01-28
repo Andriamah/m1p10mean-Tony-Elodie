@@ -13,12 +13,26 @@ export class DiagnosticComponent {
   productForm: FormGroup;  
      
   constructor(private fb:FormBuilder) {  
-     
     this.productForm = this.fb.group({  
-      details: this.fb.array([]) ,  
+       details: this.fb.array([]) ,  
+    //   details : [{
+    //     "prix": 12000,
+    //     "object": "Vitre",
+    //     "etat": "0"
+    // },
+    // {
+    //     "prix": 12000,
+    //     "object": "Pneu",
+    //     "etat": "0"
+    // },
+    // {
+    //     "prix": 12000,
+    //     "object": "Direction",
+    //     "etat": "0"
+    // }]
     });  
   }  
-    
+
   details() : FormArray {  
     return this.productForm.get("details") as FormArray  
   }  

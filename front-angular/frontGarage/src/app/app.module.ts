@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +23,11 @@ import {FactureComponent} from './client/facture.component'
 import {InscriprionComponent} from './utilisateur-list/inscription.component'
 import {ChiffreAffaireComponent} from './finance/chiffre-affaire.component'
 import {TempReparationComponent} from './finance/temp_moyenne.component'
+import { ReceptionComponent } from './reception/reception.component';
+import { ReparartionComponent } from './reparartion/reparartion.component';
+import { DiagnosticComponent } from './diagnostic/diagnostic.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { HeaderAtelierComponent } from './Header/header-atelier.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +35,7 @@ import {TempReparationComponent} from './finance/temp_moyenne.component'
     UtilisateurListComponent,
     FooterComponent,
     HeaderComponent,
+    HeaderAtelierComponent,
     DepotVoitureComponent,
     NavBarComponent,
     ReparationListComponent,
@@ -41,13 +47,19 @@ import {TempReparationComponent} from './finance/temp_moyenne.component'
     FactureComponent,
     InscriprionComponent,
     ChiffreAffaireComponent,
-    TempReparationComponent
+    TempReparationComponent,
+    UtilisateurListComponent,
+    ReceptionComponent,
+    ReparartionComponent,
+    DiagnosticComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    DragDropModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

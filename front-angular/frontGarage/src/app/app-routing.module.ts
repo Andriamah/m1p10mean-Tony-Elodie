@@ -12,6 +12,9 @@ import {FactureComponent} from './client/facture.component'
 import {InscriprionComponent} from './utilisateur-list/inscription.component'
 import {ChiffreAffaireComponent} from './finance/chiffre-affaire.component'
 import {TempReparationComponent} from './finance/temp_moyenne.component'
+import { ReceptionComponent } from './reception/reception.component';
+import { DiagnosticComponent } from './diagnostic/diagnostic.component';
+import { ReparartionComponent } from './reparartion/reparartion.component';
 
 const appRoutes: Routes = [
   { path: 'acceuil', component: DepotVoitureComponent },
@@ -25,8 +28,9 @@ const appRoutes: Routes = [
   { path: 'inscription', component: InscriprionComponent },
   { path: 'statistique', component: ChiffreAffaireComponent },
   { path: 'moyenne', component: TempReparationComponent },
-
-
+  { path: 'reception', component: ReceptionComponent },
+  { path: 'diagnostic', component: DiagnosticComponent },
+  { path: 'reception/reparation/:matricule', component: ReparartionComponent },
 ];
 
 @NgModule({
