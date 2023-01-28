@@ -13,7 +13,8 @@ export class HeaderComponent {
 
   logout() {
     localStorage.removeItem('token')
-    this.router.navigate(['']);
+    localStorage.removeItem('mail')
+    this.router.navigate(['/']);
 
   }
 }

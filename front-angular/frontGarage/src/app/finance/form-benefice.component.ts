@@ -31,7 +31,10 @@ export class FormBeneficeComponent {
   generate() {
     var depense = this.achat_piece + this.autres_depenses + this.loyer + this.salaire
     // alert(depense)
-    this.reparationService.generateBenefice(this.mois, this.annee, depense).subscribe({
+    var myArray = this.mois.split("-");
+    var le_mois = myArray[1]
+    var l_anne = myArray[0]
+    this.reparationService.generateBenefice(le_mois, l_anne, depense).subscribe({
       next: data => {
         console.log(JSON.stringify(data))
         this.depenseeee = data

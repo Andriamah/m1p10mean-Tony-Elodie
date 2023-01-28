@@ -27,38 +27,16 @@ function start(app = express(), db) {
     // ========================
 
 
-    // --------------------------
-
-    // function addcustomers(hello) {
-    //     console.log(hello)
-    // }
-    // module.exports = addcustomer
-
-
     app.get('/reparation-fini', (req, res) => {
-        reparationCollection.find({ "etat": "2" }).toArray()
+        reparationCollection.find({  etat: {
+            $lt: "3"
+        } }).toArray()
             .then(reparataion => {
                 return res.json(reparataion)
             })
             .catch(/* ... */)
     })
 
-
-    app.get('/Tonyyyy', async (req, res) => {
-        var variable
-        await reparationCollection.findOne({ "etat": "2" })
-            .then(reparataion => {
-                variable = reparataion
-                console.log("mandef" + variable)
-
-                return res.json(reparataion)
-            })
-
-            .catch(/* ... */)
-        // console.log(variable)
-
-        mail.addcustomer(variable.total)
-    })
     // ----------------------------
 
 
@@ -254,8 +232,12 @@ function start(app = express(), db) {
         ]).toArray()
             .then(reparataion => {
                 console.log(req.params.mois + " " + req.params.annee)
+                console.log(reparataion.length)
+
                 var valeur = 0
-                reparataion.forEach(element => valeur = valeur + element.valeur);
+                reparataion.forEach(element => 
+                    valeur = valeur + element.valeur
+                    );
                 var retour = {
                     value: valeur
                 }

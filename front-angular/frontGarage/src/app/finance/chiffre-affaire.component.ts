@@ -21,8 +21,11 @@ export class ChiffreAffaireComponent {
   chiffre = 0
   mois = ""
   annee = ""
+  // mL = [{ indice: 1, value: 'January' },
+  //  {indice:2,value:'February'},
+  //   {'March'}, 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
-  chiffre_jour(){
+  chiffre_jour() {
     this.reparationService.generateChiffreAffaireJour(this.jour).subscribe({
       next: data => {
         console.log(JSON.stringify(data))
@@ -35,8 +38,11 @@ export class ChiffreAffaireComponent {
     });
   }
 
-  chiffre_mois(){
-    this.reparationService.generateChiffreAffaireJMois(this.mois,this.annee).subscribe({
+  chiffre_mois() {
+    var myArray = this.mois.split("-");
+    var le_mois = myArray[1]
+    var l_anne = myArray[0]
+    this.reparationService.generateChiffreAffaireJMois(le_mois, l_anne).subscribe({
       next: data => {
         console.log(JSON.stringify(data))
         this.chiffre_affaire = data
