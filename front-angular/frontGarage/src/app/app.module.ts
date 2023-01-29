@@ -25,7 +25,11 @@ import {ChiffreAffaireComponent} from './finance/chiffre-affaire.component'
 import {TempReparationComponent} from './finance/temp_moyenne.component'
 import {LoginAtelierComponent} from './utilisateur-list/login-atelier.component'
 import {LoginFinanceComponent} from './utilisateur-list/login-finance.component'
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop'
+import {HeaderAtelierComponent} from './Header/header-atelier.component'
+import {DiagnosticComponent} from './diagnostic/diagnostic.component'
+import {ReceptionComponent} from './reception/reception.component'
+import {ReparartionComponent} from './reparartion/reparartion.component'
 
 @NgModule({
   declarations: [
@@ -46,7 +50,11 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ChiffreAffaireComponent,
     TempReparationComponent,
     LoginFinanceComponent,
-    LoginAtelierComponent
+    LoginAtelierComponent,
+    HeaderAtelierComponent,
+    DiagnosticComponent,
+    ReceptionComponent,
+    ReparartionComponent
   ],
   imports: [
     BrowserModule,
