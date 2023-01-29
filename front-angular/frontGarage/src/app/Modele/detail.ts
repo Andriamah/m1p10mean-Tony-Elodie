@@ -1,7 +1,7 @@
 export interface Detail {
 
     prix?: Number,
-    object?: string,
+    object: string,
     etat?: string
 
 }
