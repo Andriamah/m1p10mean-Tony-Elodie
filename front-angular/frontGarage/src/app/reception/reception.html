@@ -14,6 +14,8 @@
                                     <tr *ngFor="let voiture of voitures$ | async">
                                         <td>{{voiture.matricule}}</td>
                                         <td><button class="btn btn-primary"
+                                            [routerLink]="['diagnostic',voiture.matricule]">Diagnostic</button></td>
+                                        <td><button class="btn btn-primary"
                                                 [routerLink]="['reparation',voiture.matricule]">Reparer</button></td>
                                     </tr>
 

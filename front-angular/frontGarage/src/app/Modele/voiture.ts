@@ -1,9 +1,9 @@
 import {Utilisateur} from './utilisateur'
 export interface Voiture {
-    matricule?: String,
-    type?: String,
-    marque?: String,
+    matricule?: string,
+    type?: string,
+    marque?: string,
     utilisateur?: Utilisateur,
-    description?: String,
-    statut?: String
+    description?: string,
+    statut?: string
 }

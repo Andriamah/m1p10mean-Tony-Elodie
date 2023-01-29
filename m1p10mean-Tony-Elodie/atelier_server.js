@@ -20,6 +20,14 @@ function start(app = express(), db) {
       .catch(/* ... */)
   })
 
+  app.get('/getOnevoiture/matricule=:matricule', (req, res) => {
+    voiturecollection.find({ "statut": "0","matricule":req.params.matricule}).toArray()
+      .then(quotes => {
+        res.json(quotes);
+      })
+      .catch(/* ... */)
+  })
+
   app.get('/reparation_voiture/matricule=:matricule', (req, res) => {
     reparationcollection.find({"voiture.matricule": req.params.matricule,"etat":"0"}).toArray()
       .then(quotes => {
@@ -33,14 +41,14 @@ function start(app = express(), db) {
     console.log("hahahaha")
     var detail = req.body.detail
     console.log(req.body.detail)
-    console.log(detail.length)
+    // console.log(detail.length)
     var total = 0;
-    for (let i = 0; i < detail.length; i++) {
-      console.log(detail[i].prix)
-      total = total + detail[i].prix
-    }
-    req.body.total = total
-    res.json(req.body)
+    // for (let i = 0; i < detail.length; i++) {
+    //   console.log(detail[i].prix)
+    //   total = total + detail[i].prix
+    // }
+    // req.body.total = total
+    // res.json(req.body)
     reparationcollection.insertOne(req.body);
   })
 

@@ -19,7 +19,8 @@ export class ReparartionComponent {
   detailtab !: Detail[];;
   avancement !: Number
   voitures$: Observable<Detail[]> = new Observable();
-  matr = this.route.snapshot.paramMap.get("matricule");
+  matr = this.route.snapshot.paramMap.get("matricule")??"";
+
   async fetchReparation(): Promise<void> {
     this.voitures$ = await this.reparationservice.getReparation(this.matr);
   }
@@ -27,7 +28,6 @@ export class ReparartionComponent {
   getAvancement() {
     console.log("Anaty avancement")
     var total = this.todo.length + this.done.length;
-    this.avancement = (100 * this.todo.length / this.done.length);
     this.avancement = 100 - (100 * this.todo.length / total);
   }
 

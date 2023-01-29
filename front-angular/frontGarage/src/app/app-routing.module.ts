@@ -33,7 +33,9 @@ const appRoutes: Routes = [
   { path: 'atelier', component: LoginAtelierComponent },
   { path: 'finance', component: LoginFinanceComponent },
   { path: 'reception', component: ReceptionComponent },
-  { path: 'diagnostic', component: DiagnosticComponent },
+  { path: 'reception/diagnostic/:voiture', component: DiagnosticComponent },
+  { path: 'reception/diagnostic/reparation/:matricule', component: ReparartionComponent },
+  { path: 'repair', redirectTo: 'reception/reparation/:matricule', pathMatch: 'full' },
   { path: 'reception/reparation/:matricule', component: ReparartionComponent },
 
 

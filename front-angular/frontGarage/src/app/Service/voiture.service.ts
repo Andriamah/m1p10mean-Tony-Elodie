@@ -9,6 +9,7 @@ import { Voiture } from '../Modele/voiture';
 export class VoitureService {
   private url = 'http://localhost:3000';
   private voiture$: Subject<Voiture[]> = new Subject();
+  private voitur$: Subject<Voiture> = new Subject();
 
 
   constructor(private httpClient: HttpClient) { }
@@ -24,9 +25,21 @@ export class VoitureService {
       });
   }
 
+  private async refreshOneVoiture(matricule: String) {
+    this.httpClient.get<Voiture>(`${this.url}/getOnevoiture/matricule=${matricule}`)
+      .subscribe(voitures => {
+        this.voitur$.next(voitures);
+      });
+  }
+
   getVoitureEncours(mail: String): Subject<Voiture[]> {
     this.refreshVoitureEncours(mail);
     return this.voiture$;
+  }
+
+  async getOnevoiture(matricule: String): Promise<Subject<Voiture>> {
+   await this.refreshOneVoiture(matricule);
+    return this.voitur$;
   }
 
    updateVoiture(mail: String,voiture: Voiture): Observable<Voiture> {

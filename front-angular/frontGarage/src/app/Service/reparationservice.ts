@@ -15,19 +15,19 @@ export class ReparationService {
 
   constructor(private httpClient: HttpClient) { }
 
-  private refreshReparation(matricule: string | null) {
+  private refreshReparation(matricule: string ) {
     this.httpClient.get<Detail[]>(`${this.url}/reparation_voiture/matricule=${matricule}`)
       .subscribe(detail => {
         this.detail$.next(detail);
       });
   }
 
-  async getReparation(matricule: string | null): Promise<Subject<Detail[]>> {
+  async getReparation(matricule: string ): Promise<Subject<Detail[]>> {
     this.refreshReparation(matricule);
     return this.detail$;
   }
 
-  async getReparationss(matricule: string | null): Promise<Subject<Detail[]>> {
+  async getReparationss(matricule: string ): Promise<Subject<Detail[]>> {
     this.refreshReparation(matricule);
     return this.detail$;
   }
@@ -35,39 +35,33 @@ export class ReparationService {
   finirreparation(details: Detail[], matricule: string | null) {
     console.log("ty detail" + JSON.stringify(details))
     console.log("matricule " + matricule)
-    // var details = 
-    //   [
-    //     {
-    //         "prix": 12000,
-    //         "object": "Vitre",
-    //         "etat": "0"
-    //     },
-    //     {
-    //         "prix": 12000,
-    //         "object": "Pneu",
-    //         "etat": "0"
-    //     },
-    //     {
-    //         "prix": 12000,
-    //         "object": "Direction",
-    //         "etat": "0"
-    //     }
-    // ]
     var body = {
       detail : details,
       matricule : matricule
-    }
-    
+    } 
     this.httpClient.put<any>(`${this.url}/finir_detail_reparation`, body).subscribe(
       res => console.log(res),
       err => console.log(err)
     );
   }
 
-async  updateEmployee(matricule: string | null, detail: Detail[]) {
-    this.httpClient.put(`${this.url}/finir_detail_reparation/`, detail, { responseType: 'text' }).subscribe(
+  async AjoutReparation(voiture: Voiture, details: Detail,) {
+    console.log("ty detail" + JSON.stringify(details))
+    // console.log("matricule " + matricule)
+    var body = {
+      voiture: voiture,
+      detail: details,
+      etat: "0",
+      date_paiement: "",
+      date_debut: new Date(),
+      date_fin: "",
+      total: null
+    }
+    this.httpClient.post<any>(`${this.url}/ajouter_reparation`, body).subscribe(
       res => console.log(res),
       err => console.log(err)
     );
   }
+
+
 }
