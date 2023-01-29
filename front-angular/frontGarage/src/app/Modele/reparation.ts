@@ -1,3 +1,4 @@
+
 import {Voiture} from './voiture'
 export interface Reparation {
     _id?:String,
@@ -14,5 +15,14 @@ export interface Reparation {
     date_debut?: Date,
     date_fin?: Date,
     total?: Number
+// =======
+// export interface Reparation {
+//     matricule?:String,
+//     type?:String,
+//     marque?:String,
+//     utilisateur?:String,
+//     description?:String,
+//     statut?: String
+// >>>>>>> Front-Tony
 
 }

@@ -1,3 +1,4 @@
+
 import {Utilisateur} from './utilisateur'
 export interface Voiture {
     matricule?: String,
@@ -6,4 +7,5 @@ export interface Voiture {
     utilisateur?: Utilisateur,
     description?: String,
     statut?: String
+
 }

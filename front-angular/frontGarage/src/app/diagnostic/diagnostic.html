@@ -1,0 +1,76 @@
+<div class="row">
+   
+    <div class="col-md-12">
+        <!-- DATA TABLE-->
+        <div class="table-responsive m-b-40">
+            <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+                <table formArrayName="details" class="table table-borderless table-data3">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th><button type="button" (click)="addQuantity()" class="btn btn-primary">+</button></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let quantity of details().controls; let i=index" [formGroupName]="i">
+                            <td>    
+                                Reparation :
+                                <input type="text" formControlName="reparation" class="form-control">
+                            </td>
+                            <td>
+                                Prix:
+                                <input type="text" formControlName="prix" class="form-control">
+                            </td>
+                            <td>
+                                <button (click)="removeQuantity(i)" class="btn btn-danger">-</button>
+                            </td>
+                        </tr>
+                      
+                    </tbody>
+                </table>
+            </form>
+            {{this.productForm.value | json}} 
+        </div>
+
+    </div>
+    <div class="col-md-8"></div>
+    <div class="col-md-4"><button class="btn btn-primary">Enregistrer</button></div>
+
+
+    <!-- END DATA TABLE-->
+</div>
+<!-- <div class="container">
+    <h1> Dynamically Add New Input Fields in Angular </h1>  
+    
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">  
+      
+      <table  formArrayName="details">  
+        <tr>  
+          <th colspan="2">Add Multiple Quantity:</th>  
+          <th width="150px"><button type="button" (click)="addQuantity()" class="btn btn-primary">Add More</button></th>  
+        </tr>  
+        <tr *ngFor="let quantity of details().controls; let i=index" [formGroupName]="i">  
+          <td>  
+              Reparation :  
+              <input type="text" formControlName="qty" class="form-control">  
+          </td>  
+          <td>  
+              Prix:  
+              <input type="text" formControlName="price" class="form-control">  
+          </td>  
+          <td>  
+              <button (click)="removeQuantity(i)" class="btn btn-danger">Remove</button>  
+          </td>  
+        </tr>  
+      </table>  
+       
+      <button type="submit" class="btn btn-success">Submit</button>  
+        
+    </form>  
+        
+    <br/>  
+   
+
+</div> -->

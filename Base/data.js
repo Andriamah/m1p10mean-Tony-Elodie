@@ -4,6 +4,8 @@ use garage;
 db.createCollection("utilisateur");
 db.createCollection("voiture");
 db.createCollection("reparation");
+db.createCollection("detail");
+
 
 user = [
     {
@@ -72,6 +74,21 @@ car = [
     }
 ];
 db.voiture.insert(car);
+
+db.voiture.insert([
+    {
+        "matricule": "2629TAB",
+        "type": "Starlet",
+        "marque": "TOYOTA",
+        "utilisateur": {
+            "nom": "Fenoaina",
+            "prenom": "Tony",
+            "mail": "tfenoaina@gmail.com"
+        },
+        "description": "Pneu crevee et vitesse coince",
+        "statut": "0"
+    },]);
+
 
 repair = [
     {
@@ -143,22 +160,71 @@ repair = [
             },
             "description": "Injecteur nitsifotra",
             "statut": "0"
+        "voiture": {
+        "matricule": "1215TAB",
+        "type": "4*4",
+        "marque": "TOYOTA",
+        "utilisateur": {
+            "nom": "Hanintsoa",
+            "prenom": "Elodie",
+            "mail": "andriamahanintsoelo@gmail.com"
         },
-        "detail": [
-            {
-                "prix": 655000,
-                "object": "Injecteur",
-                "etat": "0"
-            }
-        ],
-        "etat": "2",
-        "date_paiement": "",
-        "date_debut": new Date(),
-        "date_fin": "",
-        "total": 655000
+        "description": "Injecteur nitsifotra",
+        "statut": "0"
+    },
+    "detail": [
+        {
+            "prix": 655000,
+            "object": "Injecteur",
+            "etat": "0"
+        }
+    ],
+    "etat": "2",
+    "date_paiement": "",
+    "date_debut": new Date(),
+    "date_fin": "",
+    "total": 655000
     }
 ];
 db.reparation.insert(repair);
+db.reparation.insert([
+    {
+        "voiture": {
+            "matricule": "2629TAB",
+            "type": "Starlet",
+            "marque": "TOYOTA",
+            "utilisateur": {
+                "nom": "Fenoaina",
+                "prenom": "Tony",
+                "mail": "tfenoaina@gmail.com"
+            },
+            "description": "Pneu crevee et vitesse coince",
+            "statut": "0"
+        },
+        "detail": [
+            {
+                "prix": 12000,
+                "object": "Vitre",
+                "etat": "0"
+            },
+            {
+                "prix": 12000,
+                "object": "Pneu",
+                "etat": "0"
+            },
+            {
+                "prix": 12000,
+                "object": "Direction",
+                "etat": "0"
+            }
+        ],
+        "etat": "0",
+        "date_paiement": "",
+        "date_debut": new Date(),
+        "date_fin": "",
+        "total": 12000
+    },])
+
 db.utilisateur.find().pretty();
 db.voiture.find().pretty();
 db.reparation.find().pretty();
@@ -202,7 +268,9 @@ db.reparation.aggregate(
             $group:
             {
                 _id: { month: { $month: "$date_debut" }, year: { $year: "$date_debut" } },
+
                 month: { $month: "$date_debut" },
+
                 totalAmount: { $sum: "$total" },
                 count: { $sum: 1 }
             }
@@ -360,18 +428,22 @@ db.reparation.aggregate([{ $addFields: { timeDiff: { $subract: [5, 8] } } }])
 
 
 
-db.reparation.find({ "date_debut": {
-    $gt: new Date("2023-01-26T01:00:00"),
-    $lt: new Date("2023-01-26T23:59:59")
-} }).pretty();
+db.reparation.find({
+    "date_debut": {
+        $gt: new Date("2023-01-26T01:00:00"),
+        $lt: new Date("2023-01-26T23:59:59")
+    }
+}).pretty();
 
 db.reparation.aggregate([
-    { $match: { 
-        "date_debut": {
-            $gt: new Date("2023-01-26T01:00:00"),
-            $lt: new Date("2023-01-26T23:59:59")
-        } 
-    } },
+    {
+        $match: {
+            "date_debut": {
+                $gt: new Date("2023-01-26T01:00:00"),
+                $lt: new Date("2023-01-26T23:59:59")
+            }
+        }
+    },
     { $group: { _id: "$date_debut", valeur: { $sum: "$total" } } }
 ]).pretty()
 
@@ -414,6 +486,7 @@ db.planning.aggregate(
 
 // Recherche---------------------------------
 db.reparation.find({
+
     date_debut: {
         $gte: ISODate("2022-01-29T00:00:00.000Z"),
         $lt: ISODate("2023-02-01T00:00:00.000Z")
@@ -431,6 +504,8 @@ db.data.find({
 db.reparation.find({
     "$date_debut": "2023-01-29T00:00:00.000Z"
 }).pretty()
+
+
 // Rercheche-------------------------------------------
 
 db.reparation.find().pretty();

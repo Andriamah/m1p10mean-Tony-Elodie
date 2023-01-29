@@ -7,14 +7,24 @@ function start(app = express(), db) {
   // module.exports = router;
   const voiturecollection = db.collection('voiture')
   const reparationcollection = db.collection('reparation')
+  const detail = db.collection('detail')
   // ========================
   // Middlewares
   // ========================
 
   app.get('/reception_voiture', (req, res) => {
-    voiturecollection.find({ statut: "0" }).toArray()
+    voiturecollection.find({ statut: "0"}).toArray()
       .then(quotes => {
         res.json(quotes);
+      })
+      .catch(/* ... */)
+  })
+
+  app.get('/reparation_voiture/matricule=:matricule', (req, res) => {
+    reparationcollection.find({"voiture.matricule": req.params.matricule,"etat":"0"}).toArray()
+      .then(quotes => {
+        res.json(quotes[0].detail);
+        console.log(quotes[0].detail)
       })
       .catch(/* ... */)
   })
@@ -34,31 +44,39 @@ function start(app = express(), db) {
     reparationcollection.insertOne(req.body);
   })
 
-  app.post('/finir_detail_reparation', (req, res) => {
-     
+
+  app.put('/valider-paiement/_id=:_id', (req, res) => {
+    //     reparationCollection.updateOne({ "_id": req.params._id }, { $set: { "etat": 111 } },{upsert: true}
+    // })
+    reparationCollection.findOneAndUpdate({ "voiture.nom": req.params._id },
+        { $set: { "etat": 1, "date_paiement": new Date() } }, { upsert: true })
+        .then(reparataion => {
+            console.log("valisation " + req.params._id)
+            return res.json(reparataion)
+        })
+        .catch(/* ... */)
+    db.close()
+})
+
+  app.put('/finir_detail_reparation', (req, res) => {
+    console.log("matricule")
+    console.log(req.body.matricule)
+    console.log("detail")
+    console.log(req.body.detail)
     reparationcollection.findOneAndUpdate(
-      { "detail.object" :req.body.object,"voiture.matricule":req.body.matricule,"etat":"0","detail.prix" :req.body.prix},
+      {"voiture.matricule":req.body.matricule,"etat":"0"},
       {
         $set: {
-          "detail": [
-            {
-                "prix": req.body.prix,
-                "object": req.body.object,
-                "etat": "1"
-            }
-        ],
+          "detail": 
+           req.body.detail
         },
       
       }
     )
       .then(result => res.json('Success'))
+      // console.log("poinsa")
       .catch(error => console.error(error))
   })
-
-  
-
-
-
 
 }
 exports.start = start;

@@ -5,3 +5,4 @@ export interface Detail {
     etat?: String
 
 }
+

@@ -2,14 +2,12 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
-
-
-
-
+const cors=require('cors');
 const connectionString = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb"
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(express.static('public'))
+app.use(cors())
 MongoClient.connect(connectionString, { useUnifiedTopology: true })
 .then(client => {
   console.log('Connected to Database')
