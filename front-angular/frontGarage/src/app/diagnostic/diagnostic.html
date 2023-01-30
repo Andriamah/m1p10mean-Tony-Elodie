@@ -14,26 +14,27 @@
                                 <table style="height: 70px;" formArrayName="detail" class="table table-borderless table-data">
                                     <thead>
                                         <tr>
-                                            <th><button type="button" (click)="addQuantity()"
+                                            <th *ngIf="this.productForm.value.detail!=[]"><button disabled type="button" (click)="addQuantity()"
                                                 class="btn btn-primary">+Ajouter</button></th>
+                                                <th *ngIf="this.productForm.value.detail==[]"><button disabled type="button" (click)="addQuantity()"
+                                                    class="btn btn-primary">+Ajouter</button></th>
                                             <th></th>
                                             <th></th>
-
                                         </tr>
                                     </thead>
-                                    <tbody async>
+                                    <tbody *ngIf="this.productForm.value.detail!=[]">
                                         <tr *ngFor="let quantity of detail().controls  ; let i=index" 
                                             [formGroupName]="i" >
                                             <td >
                                                 Reparation :
-                                                <input value="{{this.productForm.value.detail[i].object}}" type="text" formControlName="reparation" class="form-control">
+                                                <input  value="{{this.productForm.value.detail[i].object}}" type="text"  class="form-control" disabled>
                                             </td>
                                             <td  >
                                                 Prix:
-                                                <input value="{{this.productForm.value.detail[i].prix}}" type="number" formControlName="prix" class="form-control">
+                                                <input disabled value="{{this.productForm.value.detail[i].prix}}" type="number"  class="form-control">
                                             </td>
                                             <td *ngIf="this.productForm.value.detail[i].etat=='0'">
-                                                <button (click)="removeQuantity(i)" class="btn btn-danger">supprimer</button>
+                                                <button disabled (click)="removeQuantity(i)" class="btn btn-danger">en cours</button>
                                             </td>
                                             <td *ngIf="this.productForm.value.detail[i].etat=='1'">
                                                 <button disabled (click)="removeQuantity(i)" style="background-color: green; color: white;" class="btn btn-active">Fini</button>
@@ -57,13 +58,51 @@
                                         <tr>
                                             <td></td>
                                             <td></td>
+                                            <!-- <td><button [routerLink]="['/repair',this.matricule]" class="btn btn-primary">Enregistrer</button></td> -->
+                                        </tr>
+
+                                    </tbody>
+                                    <tbody *ngIf="this.productForm.value.detail==[]">
+                                        <tr *ngFor="let quantity of detail().controls  ; let i=index" 
+                                            [formGroupName]="i" >
+                                            <td >
+                                                Reparation :
+                                                <input  value="{{this.productForm.value.detail[i].object}}" type="text" formControlName="reparation" class="form-control" >
+                                            </td>
+                                            <td  >
+                                                Prix:
+                                                <input value="{{this.productForm.value.detail[i].prix}}" type="number" formControlName="prix" class="form-control">
+                                            </td>
+                                            <td *ngIf="this.productForm.value.detail[i].etat=='0'">
+                                                <button (click)="removeQuantity(i)" class="btn btn-danger">supprimer</button>
+                                            </td>
+                                            <td *ngIf="this.productForm.value.detail[i].etat=='1'">
+                                                <button disabled (click)="removeQuantity(i)" style="background-color: green; color: white;" class="btn btn-active">Fini</button>
+                                            </td>
+                                        
+                                            <!-- <td *ngIf="this.productForm.value.detail[i].etat!='0'">
+                                                Reparation :
+                                                <input  value="{{this.productForm.value.detail[i].object}}" type="text" formControlName="reparation" class="form-control">
+                                            </td>
+                                            <td  *ngIf="this.productForm.value.detail[i].etat!='0'">
+                                                Prix:
+                                                <input  value="{{this.productForm.value.detail[i].prix}}" type="text" formControlName="prix" class="form-control">
+                                            </td>
+                                            <td *ngIf="this.productForm.value.detail[i].etat!='0'">
+                                                <button disabled (click)="removeQuantity(i)" class="btn btn-danger">supprimer</button>
+                                            </td> -->
+
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
                                             <td><button [routerLink]="['/repair',this.matricule]" class="btn btn-primary">Enregistrer</button></td>
                                         </tr>
 
                                     </tbody>
                                 </table>
                             </form>
-                            {{this.productForm.value | json}}
+                            <!-- {{this.productForm.value | json}} -->
                         </div>
 
                     </div>

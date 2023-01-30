@@ -79,7 +79,8 @@ export class ReparartionComponent {
          
          // console.log("aroooo" + JSON.stringify(datas))
         }
-        this.reparationservice.finirreparation(this.tableau, this.matr)
+         this.getAvancement()
+        this.reparationservice.finirreparation(this.tableau, this.matr,this.avancement.toString())
         // this.reparationservice.updateEmployee(this.matr,this.tableau)
         
         console.log("vita")
@@ -99,7 +100,6 @@ export class ReparartionComponent {
 
     } else {
       this.start = 1
-      await this.updatereparation(this.todo[event.previousIndex])
       
       console.log("matricule" + this.matr)
       //console.log(JSON.stringify(this.tableau))
@@ -114,6 +114,7 @@ export class ReparartionComponent {
         event.previousIndex,
         event.currentIndex,
       );
+      await this.updatereparation(this.todo[event.previousIndex])
       // this.getAvancement()
 
     }

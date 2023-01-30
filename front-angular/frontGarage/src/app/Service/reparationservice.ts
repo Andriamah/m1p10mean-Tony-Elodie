@@ -32,12 +32,13 @@ export class ReparationService {
     return this.detail$;
   }
 
-  finirreparation(details: Detail[], matricule: string | null) {
+  finirreparation(details: Detail[], matricule: string | null,avancement: string) {
     console.log("ty detail" + JSON.stringify(details))
     console.log("matricule " + matricule)
     var body = {
       detail : details,
-      matricule : matricule
+      matricule : matricule,
+      avancement :avancement
     } 
     this.httpClient.put<any>(`${this.url}/finir_detail_reparation`, body).subscribe(
       res => console.log(res),
@@ -55,6 +56,7 @@ export class ReparationService {
       date_paiement: "",
       date_debut: new Date(),
       date_fin: "",
+      avancement:"",
       total: null
     }
     this.httpClient.post<any>(`${this.url}/ajouter_reparation`, body).subscribe(

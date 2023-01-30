@@ -207,7 +207,7 @@ db.reparation.insert([
                 "etat": "0"
             }
         ],
-        "etat": "0",
+        "etat": "0", 
         "date_paiement": "",
         "date_debut": new Date(),
         "date_fin": "",

@@ -13,7 +13,7 @@ function start(app = express(), db) {
   // ========================
 
   app.get('/reception_voiture', (req, res) => {
-    voiturecollection.find({ statut: "0"}).toArray()
+    voiturecollection.find({ statut: "0",}).toArray()
       .then(quotes => {
         res.json(quotes);
       })
@@ -43,12 +43,12 @@ function start(app = express(), db) {
     console.log(req.body.detail)
     // console.log(detail.length)
     var total = 0;
-    // for (let i = 0; i < detail.length; i++) {
-    //   console.log(detail[i].prix)
-    //   total = total + detail[i].prix
-    // }
-    // req.body.total = total
-    // res.json(req.body)
+    for (let i = 0; i < detail.length; i++) {
+      console.log(detail[i].prix)
+      total = total + detail[i].prix
+    }
+    req.body.total = total
+    res.json(req.body)
     reparationcollection.insertOne(req.body);
     voiturecollection.findOneAndUpdate(
       {"matricule":req.body.voiture.matricule},
@@ -87,7 +87,8 @@ function start(app = express(), db) {
       {
         $set: {
           "detail": 
-           req.body.detail
+           req.body.detail,
+           "avancement":req.body.avancement
         },
       
       }
