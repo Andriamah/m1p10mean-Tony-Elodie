@@ -4,7 +4,7 @@
   "description": "Demo for Crud Express MongoDB article at https://zellwk.com/blog/crud-express-mongodb",
   "main": "index.js",
   "scripts": {
-    "start": "node pm2.js",
+    "start": "node exec.js",
     "restart": "node pm2.js crud-demo --update-env",
     "dev": "nodemon server.js",
     "sync": "node sync.js"
