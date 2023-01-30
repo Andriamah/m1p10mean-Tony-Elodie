@@ -39,7 +39,7 @@ export class DetailReparationComponent implements OnInit {
     }
     this.fetchEmployees(id);
   }
-
+color = "blue"
 
   fetchEmployees(id: String): void {
     

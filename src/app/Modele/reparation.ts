@@ -14,5 +14,6 @@ export interface Reparation {
     date_debut?: Date,
     date_fin?: Date,
     total?: Number
+    avancement?:String
 
 }
