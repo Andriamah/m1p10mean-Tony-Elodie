@@ -45,6 +45,17 @@ export class ReparationService {
       err => console.log(err)
     );
   }
+  
+  terminerreparation(matricule: string | null) {
+    console.log("matricule " + matricule)
+    var body = {
+      matricule : matricule
+    } 
+    this.httpClient.put<any>(`${this.url}/finir_reparation`, body).subscribe(
+      res => console.log(res),
+      err => console.log(err)
+    );
+  }
 
   async AjoutReparation(voiture: Voiture, details: Detail,) {
     console.log("ty detail" + JSON.stringify(details))

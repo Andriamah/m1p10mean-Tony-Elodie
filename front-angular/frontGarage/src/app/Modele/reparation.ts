@@ -13,6 +13,7 @@ export interface Reparation {
     date_paiement?: Date
     date_debut?: Date,
     date_fin?: Date,
+    avancement?:number,
     total?: Number
 
 }

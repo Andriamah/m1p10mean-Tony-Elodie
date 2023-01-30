@@ -17,7 +17,7 @@ export class ReparartionComponent {
   start: number = 0;
   done: string[] = [];;
   detailtab !: Detail[];;
-  avancement !: Number
+  avancement !: number
   voitures$: Observable<Detail[]> = new Observable();
   matr = this.route.snapshot.paramMap.get("matricule")??"";
 

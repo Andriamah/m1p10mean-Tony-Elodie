@@ -32,6 +32,7 @@ import {ReceptionComponent} from './reception/reception.component'
 import {ReparartionComponent} from './reparartion/reparartion.component'
 import { CommonModule } from '@angular/common';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     FormsModule,
     DragDropModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    MatProgressBarModule
   ],
   providers: [ { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
