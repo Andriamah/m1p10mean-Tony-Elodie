@@ -31,6 +31,7 @@ import {DiagnosticComponent} from './diagnostic/diagnostic.component'
 import {ReceptionComponent} from './reception/reception.component'
 import {ReparartionComponent} from './reparartion/reparartion.component'
 import { CommonModule } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,7 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     CommonModule
   ],
-  providers: [],
+  providers: [ { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
  })
  export class AppModule { 
