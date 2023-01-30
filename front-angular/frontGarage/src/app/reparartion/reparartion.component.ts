@@ -115,6 +115,9 @@ export class ReparartionComponent {
         event.currentIndex,
       );
       await this.updatereparation(this.todo[event.previousIndex])
+      if (this.done.length==0) {
+        this.reparationservice.terminerreparation(this.matr);
+      }
       // this.getAvancement()
 
     }
