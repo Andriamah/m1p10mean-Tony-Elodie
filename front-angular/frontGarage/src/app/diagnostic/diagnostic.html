@@ -22,8 +22,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let quantity of detail().controls ; let i=index" | async
-                                            [formGroupName]="i">
+                                        <tr *ngFor="let quantity of detail().controls  ; let i=index" 
+                                            [formGroupName]="i" | async>
                                             <td>
                                                 Reparation :
                                                 <input value="{{this.productForm.value.detail[i].object}}" type="text" formControlName="reparation" class="form-control">
