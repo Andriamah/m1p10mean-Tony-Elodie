@@ -77,6 +77,22 @@ function start(app = express(), db) {
     db.close()
 })
 
+app.put('/finir_reparation', (req, res) => {
+  console.log("matricule")
+  console.log(req.body.matricule)
+  reparationcollection.findOneAndUpdate(
+    {"voiture.matricule":req.body.matricule,"etat":"0"},
+    {
+      $set: {
+        "etat": "1"
+      },
+    }
+  )
+    .then(result => res.json('Success'))
+    // console.log("poinsa")
+    .catch(error => console.error(error))
+})
+
   app.put('/finir_detail_reparation', (req, res) => {
     console.log("matricule")
     console.log(req.body.matricule)
