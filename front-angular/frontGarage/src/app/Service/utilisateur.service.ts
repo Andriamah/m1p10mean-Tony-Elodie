@@ -7,7 +7,7 @@ import { Utilisateur } from '../Modele/utilisateur';
  providedIn: 'root'
 })
 export class UtilisateurService {
- private url = 'http://localhost:3000';
+ private url = 'https://m1p10mean-tony-elodie-production.up.railway.app';
  private utilisateur$: Subject<Utilisateur[]> = new Subject();
  
  constructor(private httpClient: HttpClient) { }

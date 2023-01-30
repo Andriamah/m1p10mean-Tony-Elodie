@@ -8,7 +8,7 @@ import { Voiture } from '../Modele/voiture';
  providedIn: 'root'
 })
 export class VoitureService {
- private url = 'http://localhost:3000';
+ private url = 'https://m1p10mean-tony-elodie-production.up.railway.app';
  private voiture$: Subject<Voiture[]> = new Subject();
  
  constructor(private httpClient: HttpClient) { }

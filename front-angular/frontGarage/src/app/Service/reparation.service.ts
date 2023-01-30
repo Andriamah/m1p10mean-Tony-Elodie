@@ -9,7 +9,7 @@ import { Chiffre } from '../Modele/chiffre';
   providedIn: 'root'
 })
 export class ReparationService {
-  private url = 'http://localhost:3000';
+  private url = 'https://m1p10mean-tony-elodie-production.up.railway.app';
   private reparation$: Subject<Reparation[]> = new Subject();
   private moyenne$: Subject<Chiffre[]> = new Subject();
 

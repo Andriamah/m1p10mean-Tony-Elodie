@@ -7,7 +7,7 @@ import { Detail } from '../Modele/detail';
  providedIn: 'root'
 })
 export class DetailService {
- private url = 'http://localhost:3000';
+ private url = 'https://m1p10mean-tony-elodie-production.up.railway.app';
  private detail$: Subject<Detail[]> = new Subject();
  
  constructor(private httpClient: HttpClient) { }
