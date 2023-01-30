@@ -3,7 +3,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { ReparationService } from '../Service/reparationservice';
 import { Reparation } from '../Modele/reparation';
 import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouteConfigLoadEnd } from '@angular/router';
 import { Detail } from '../Modele/detail';
 @Component({
@@ -12,7 +12,7 @@ import { Detail } from '../Modele/detail';
   styleUrls: ['draganddrop.css']
 })
 export class ReparartionComponent {
-  constructor(private reparationservice: ReparationService, private route: ActivatedRoute) { }
+  constructor(private reparationservice: ReparationService, private route: ActivatedRoute, private router: Router) { }
   todo: string[] = [];;
   start: number = 0;
   done: string[] = [];;
@@ -117,6 +117,7 @@ export class ReparartionComponent {
      
       if (this.done.length==0) {
         this.reparationservice.terminerreparation(this.matr);
+        this.router.navigate(['#/reception']);
       }
       // this.getAvancement()
 
