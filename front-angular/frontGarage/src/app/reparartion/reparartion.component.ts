@@ -107,14 +107,14 @@ export class ReparartionComponent {
       // console.log("update :" + this.todo.length)
 
       // console.log("hahahaha" + this.todo[event.currentIndex]);
-
+      await this.updatereparation(this.todo[event.previousIndex])
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex,
       );
-      await this.updatereparation(this.todo[event.previousIndex])
+     
       if (this.done.length==0) {
         this.reparationservice.terminerreparation(this.matr);
       }
