@@ -50,8 +50,19 @@ function start(app = express(), db) {
     // req.body.total = total
     // res.json(req.body)
     reparationcollection.insertOne(req.body);
+    voiturecollection.findOneAndUpdate(
+      {"matricule":req.body.voiture.matricule},
+      {
+        $set: {
+          "statut": 
+          "1"
+        },
+      }
+    )
+      .then(result => res.json('Success'))
+      // console.log("poinsa")
+      .catch(error => console.error(error))
   })
-
 
   app.put('/valider-paiement/_id=:_id', (req, res) => {
     //     reparationCollection.updateOne({ "_id": req.params._id }, { $set: { "etat": 111 } },{upsert: true}

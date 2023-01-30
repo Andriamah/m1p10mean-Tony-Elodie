@@ -15,15 +15,15 @@ export class ReparationService {
 
   constructor(private httpClient: HttpClient) { }
 
-  private refreshReparation(matricule: string ) {
-    this.httpClient.get<Detail[]>(`${this.url}/reparation_voiture/matricule=${matricule}`)
+  async refreshReparation(matricule: string ) {
+     this.httpClient.get<Detail[]>(`${this.url}/reparation_voiture/matricule=${matricule}`)
       .subscribe(detail => {
         this.detail$.next(detail);
       });
   }
 
   async getReparation(matricule: string ): Promise<Subject<Detail[]>> {
-    this.refreshReparation(matricule);
+    await this.refreshReparation(matricule);
     return this.detail$;
   }
 

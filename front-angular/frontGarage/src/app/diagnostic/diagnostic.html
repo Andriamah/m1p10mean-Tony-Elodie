@@ -11,7 +11,7 @@
                         <h1 style="margin-left: 200px ;    font-family: math;">  {{this.matricule}} </h1>
                         <div style="box-shadow: 100px; border-radius: 5px; margin-top:50px;margin-left: 200px ;background-color: white;width: 900px;" class="table-responsive m-b-40">
                             <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-                                <table style="height: 70px;" formArrayName="details" class="table table-borderless table-data">
+                                <table style="height: 70px;" formArrayName="detail" class="table table-borderless table-data">
                                     <thead>
                                         <tr>
                                             <th><button type="button" (click)="addQuantity()"
@@ -22,15 +22,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let quantity of details().controls; let i=index"
+                                        <tr *ngFor="let quantity of detail().controls ; let i=index" | async
                                             [formGroupName]="i">
                                             <td>
                                                 Reparation :
-                                                <input value="{{this.productForm.value.details[i].object}}" type="text" formControlName="reparation" class="form-control">
+                                                <input value="{{this.productForm.value.detail[i].object}}" type="text" formControlName="reparation" class="form-control">
                                             </td>
                                             <td>
                                                 Prix:
-                                                <input value="{{this.productForm.value.details[i].prix}}" type="text" formControlName="prix" class="form-control">
+                                                <input value="{{this.productForm.value.detail[i].prix}}" type="text" formControlName="prix" class="form-control">
                                             </td>
                                             <td>
                                                 <button (click)="removeQuantity(i)" class="btn btn-danger">supprimer</button>
@@ -39,7 +39,7 @@
                                         <tr>
                                             <td></td>
                                             <td></td>
-                                            <td><button [routerLink]="['./repair',this.matricule]" class="btn btn-primary">Enregistrer</button></td>
+                                            <td><button [routerLink]="['/repair',this.matricule]" class="btn btn-primary">Enregistrer</button></td>
                                         </tr>
 
                                     </tbody>

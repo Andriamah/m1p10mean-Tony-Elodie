@@ -14,10 +14,11 @@ import { VoitureService } from '../Service/voiture.service';
 export class DiagnosticComponent {
 
   name = 'Angular';
-  tableau : Detail[]=[]
+  
   productForm: FormGroup;
   voiture!: Voiture ;
   matricule = this.route.snapshot.paramMap.get("voiture")??"";
+  tableau : Detail[]=[]
   // jsonString!: string  
 
   async getVoiture(){
@@ -25,30 +26,32 @@ export class DiagnosticComponent {
       next: (data) => {
         this.voiture = data
         console.log("hahahahahahahaha"+data)
+        console.log("tableau"+this.tableau)
       }
     })
   } 
-  // async getreparations() {
-  //       let data = JSON.parse(this.jsonString);
-  //       this.voiture = <Voiture>data;
-   
-  //     (await this.reparationservice.getReparation(this.voiture.matricule??"")).subscribe({
-  //       next: (data) => {
-  //         this.tableau = data
-  //         console.log("hahahahahahahaha"+data)
-  //       }
-  //     })
-  //   }
+  async getreparations() {
+        // let data = JSON.parse(this.voiture.matricule??"");
+        // this.voiture = <Voiture>data;
+      (await this.reparationservice.getReparation(this.matricule)).subscribe({
+        next: (data) => {
+          this.tableau = data
+          console.log("tyhakakaka"+data)
+        }
+      })
+    }
   constructor(private fb: FormBuilder,private reparationservice: ReparationService,private route: ActivatedRoute,private voitureservice:VoitureService) {
-    // this.getreparations();
+     this.getreparations();
+    //  await this.getreparations()
+     console.log("ato zah"+ this.tableau)
     this.productForm = this.fb.group({
-      details: this.fb.array(this.tableau),
+      detail: this.fb.array(this.tableau),
     });
     // this.getreparations();
   }
 
-  details(): FormArray {
-    return this.productForm.get("details") as FormArray
+  detail(): FormArray {
+    return this.productForm.get("detail") as FormArray
   }
   newQuantity(): FormGroup {
     return this.fb.group({
@@ -59,22 +62,40 @@ export class DiagnosticComponent {
   }
   addQuantity() {
     // this.getreparations();
-    this.details().push(this.newQuantity());
+    this.detail().push(this.newQuantity());
   }
   removeQuantity(i: number) {
-    this.details().removeAt(i);
+    this.detail().removeAt(i);
   }
 
   onSubmit() {
     console.log(this.productForm.value);
-    console.log("ty leizy"+JSON.stringify(this.voiture).replace("[",""));
-    console.log("atooo"+JSON.stringify(this.productForm.value.details))
-    this.reparationservice.AjoutReparation(this.voiture,this.productForm.value.details);
+    // console.log("ty leizy"+JSON.stringify(this.voiture).replace("[",""));
+    console.log("atooo"+JSON.stringify(this.productForm.value.detail))
+    this.reparationservice.AjoutReparation(this.voiture,this.productForm.value.detail);
   }
 
   async ngOnInit(): Promise<void> {
-    // await this.getreparations();
-    await this.getVoiture()
+     (await this.reparationservice.getReparation(this.matricule)).subscribe({
+      next: (data:  Detail[]) => {
+        this.productForm.value.detail= data
+        this.productForm = this.fb.group({
+          detail: this.fb.array(data),
+        });
+        console.log("tonyyyyyy"+data)
+      }
+    })
+     await this.getreparations().then(
+      async value => this.productForm.value.detail=this.tableau,
+      // result =>this.productForm.setValue(this.tableau), 
+      affiche =>console.log("eto aloha"+this.tableau),  
+     )
+     await this.getVoiture()
+    
   }
 
 }
+function subscribe(arg0: { next: (data: Detail[]) => void; }) {
+  throw new Error('Function not implemented.');
+}
+

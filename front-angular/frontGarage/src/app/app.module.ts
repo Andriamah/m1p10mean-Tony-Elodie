@@ -30,6 +30,7 @@ import {HeaderAtelierComponent} from './Header/header-atelier.component'
 import {DiagnosticComponent} from './diagnostic/diagnostic.component'
 import {ReceptionComponent} from './reception/reception.component'
 import {ReparartionComponent} from './reparartion/reparartion.component'
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import {ReparartionComponent} from './reparartion/reparartion.component'
     HttpClientModule,
     FormsModule,
     DragDropModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
