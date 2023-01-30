@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const cors = require("cors")
 
 
-const connectionString = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb"
+const connectionString = "mongodb+srv://user_eld:wenna1234@cluster0.l6zyfiz.mongodb.net/?retryWrites=true&w=majority"
 app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())

@@ -67,7 +67,7 @@ function start(app = express(), db) {
             }
         }).toArray()
             .then(reparataion => {
-                console.log("boby")
+                console.log(reparataion)
                 return res.json(reparataion)
             })
             .catch(/* ... */)
