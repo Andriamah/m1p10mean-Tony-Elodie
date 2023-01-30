@@ -63,6 +63,7 @@ export class DiagnosticComponent {
   }
   addQuantity() {
     // this.getreparations();
+   
     this.detail().push(this.newQuantity());
   }
   removeQuantity(i: number) {
@@ -74,11 +75,14 @@ export class DiagnosticComponent {
     console.log("atooo" + JSON.stringify(this.productForm.value.detail))
     this.reparationservice.AjoutReparation(this.voiture, this.productForm.value.detail);
   }
-
+  constante : number = 0
   async ngOnInit(): Promise<void> {
-    for (let i = 0; i < 50; i++) {
+    
       (await this.reparationservice.getReparation(this.matricule)).subscribe({
         next: async (data: Detail[]) => {
+          if (data.length>0) {
+            this.constante = 1
+          }
           this.productForm.value.detail = data
           this.productForm = this.fb.group({
             detail: this.fb.array(data),
@@ -88,9 +92,7 @@ export class DiagnosticComponent {
       })
 
 
-    }
-
-
+    
 
     //  await this.getreparations().then(
     //   async value => this.productForm.value.detail=this.tableau,

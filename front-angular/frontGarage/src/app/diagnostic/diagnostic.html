@@ -14,15 +14,15 @@
                                 <table style="height: 70px;" formArrayName="detail" class="table table-borderless table-data">
                                     <thead>
                                         <tr>
-                                            <th *ngIf="this.productForm.value.detail!=[]"><button  type="button" (click)="addQuantity()"
+                                            <th *ngIf="this.constante==0"><button  type="button" (click)="addQuantity()"
                                                 class="btn btn-primary">+Ajouter</button></th>
-                                                <th *ngIf="this.productForm.value.detail==[]"><button disabled type="button" (click)="addQuantity()"
+                                                <th *ngIf="this.constante==1"><button disabled type="button" (click)="addQuantity()"
                                                     class="btn btn-primary">+Ajouter</button></th>
                                             <th></th>
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody *ngIf="this.productForm.value.detail!=[]">
+                                    <tbody *ngIf="this.constante==1">
                                         <tr *ngFor="let quantity of detail().controls  ; let i=index" 
                                             [formGroupName]="i" >
                                             <td >
@@ -62,7 +62,7 @@
                                         </tr>
 
                                     </tbody>
-                                    <tbody *ngIf="this.productForm.value.detail==[]">
+                                    <tbody *ngIf="this.constante==0">
                                         <tr *ngFor="let quantity of detail().controls  ; let i=index" 
                                             [formGroupName]="i" >
                                             <td >
