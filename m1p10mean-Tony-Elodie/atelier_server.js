@@ -13,7 +13,15 @@ function start(app = express(), db) {
   // ========================
 
   app.get('/reception_voiture', (req, res) => {
-    voiturecollection.find({ statut: "0"}).toArray()
+    voiturecollection.find({ statut: "0",}).toArray()
+      .then(quotes => {
+        res.json(quotes);
+      })
+      .catch(/* ... */)
+  })
+
+  app.get('/getOnevoiture/matricule=:matricule', (req, res) => {
+    voiturecollection.find({ "statut": "0","matricule":req.params.matricule}).toArray()
       .then(quotes => {
         res.json(quotes);
       })
@@ -33,7 +41,7 @@ function start(app = express(), db) {
     console.log("hahahaha")
     var detail = req.body.detail
     console.log(req.body.detail)
-    console.log(detail.length)
+    // console.log(detail.length)
     var total = 0;
     for (let i = 0; i < detail.length; i++) {
       console.log(detail[i].prix)
@@ -42,8 +50,19 @@ function start(app = express(), db) {
     req.body.total = total
     res.json(req.body)
     reparationcollection.insertOne(req.body);
+    voiturecollection.findOneAndUpdate(
+      {"matricule":req.body.voiture.matricule},
+      {
+        $set: {
+          "statut": 
+          "1"
+        },
+      }
+    )
+      .then(result => res.json('Success'))
+      // console.log("poinsa")
+      .catch(error => console.error(error))
   })
-
 
   app.put('/valider-paiement/_id=:_id', (req, res) => {
     //     reparationCollection.updateOne({ "_id": req.params._id }, { $set: { "etat": 111 } },{upsert: true}
@@ -68,7 +87,8 @@ function start(app = express(), db) {
       {
         $set: {
           "detail": 
-           req.body.detail
+           req.body.detail,
+           "avancement":req.body.avancement
         },
       
       }
