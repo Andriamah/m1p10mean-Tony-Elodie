@@ -21,20 +21,38 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody async>
                                         <tr *ngFor="let quantity of detail().controls  ; let i=index" 
-                                            [formGroupName]="i" | async>
-                                            <td>
+                                            [formGroupName]="i" >
+                                            <td >
                                                 Reparation :
                                                 <input value="{{this.productForm.value.detail[i].object}}" type="text" formControlName="reparation" class="form-control">
                                             </td>
-                                            <td>
+                                            <td  >
                                                 Prix:
-                                                <input value="{{this.productForm.value.detail[i].prix}}" type="text" formControlName="prix" class="form-control">
+                                                <input value="{{this.productForm.value.detail[i].prix}}" type="number" formControlName="prix" class="form-control">
                                             </td>
-                                            <td>
+                                            <td *ngIf="this.productForm.value.detail[i].etat=='0'">
                                                 <button (click)="removeQuantity(i)" class="btn btn-danger">supprimer</button>
                                             </td>
+                                            <td *ngIf="this.productForm.value.detail[i].etat=='1'">
+                                                <button disabled (click)="removeQuantity(i)" style="background-color: green; color: white;" class="btn btn-active">Fini</button>
+                                            </td>
+                                           
+
+
+                                            <!-- <td *ngIf="this.productForm.value.detail[i].etat!='0'">
+                                                Reparation :
+                                                <input  value="{{this.productForm.value.detail[i].object}}" type="text" formControlName="reparation" class="form-control">
+                                            </td>
+                                            <td  *ngIf="this.productForm.value.detail[i].etat!='0'">
+                                                Prix:
+                                                <input  value="{{this.productForm.value.detail[i].prix}}" type="text" formControlName="prix" class="form-control">
+                                            </td>
+                                            <td *ngIf="this.productForm.value.detail[i].etat!='0'">
+                                                <button disabled (click)="removeQuantity(i)" class="btn btn-danger">supprimer</button>
+                                            </td> -->
+
                                         </tr>
                                         <tr>
                                             <td></td>
